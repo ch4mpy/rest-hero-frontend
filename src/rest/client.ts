@@ -57,7 +57,7 @@ export async function apiFetch<T = unknown>(
   const method = opts.method ?? "GET";
   const headers: Record<string, string> = { Accept: "application/json", ...(opts.headers ?? {}) };
 
-  if (method !== "GET" && method !== "HEAD") {
+  if (method !== "GET") {
     const xsrf = readCookie("XSRF-TOKEN");
     if (xsrf) headers["X-XSRF-TOKEN"] = xsrf;
   }
