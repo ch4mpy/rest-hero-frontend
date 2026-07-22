@@ -1,0 +1,108 @@
+{
+  "app": {
+    "title": "REST hero",
+    "tagline": "Votre banque en ligne, simplifiée."
+  },
+  "nav": {
+    "home": "Accueil",
+    "signIn": "Se connecter",
+    "signOut": "Se déconnecter",
+    "language": "Langue"
+  },
+  "home": {
+    "welcome": "Bienvenue",
+    "welcomeAnon": "Connectez-vous pour accéder à votre espace bancaire.",
+    "signInCta": "Se connecter",
+    "details": "Coordonnées",
+    "accounts": "Comptes",
+    "beneficiaries": "Bénéficiaires",
+    "selectCustomer": "Sélectionner un client",
+    "searchCustomer": "Rechercher par nom, email…",
+    "addCustomer": "Ajouter un client",
+    "addAccount": "Ajouter un compte",
+    "addBeneficiary": "Ajouter un bénéficiaire",
+    "noAccounts": "Aucun compte.",
+    "noBeneficiaries": "Aucun bénéficiaire.",
+    "noCustomerSelected": "Aucun client sélectionné."
+  },
+  "user": {
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Email",
+    "username": "Nom d'utilisateur"
+  },
+  "account": {
+    "iban": "IBAN",
+    "currency": "Devise",
+    "balance": "Solde",
+    "info": "Informations",
+    "cards": "Cartes",
+    "movements": "Mouvements",
+    "back": "Retour"
+  },
+  "card": {
+    "number": "Numéro",
+    "transactionCeiling": "Plafond par transaction",
+    "rolling30Ceiling": "Plafond sur 30 jours",
+    "active": "Active",
+    "info": "Informations",
+    "payments": "Paiements",
+    "pay": "Payer",
+    "addCard": "Ajouter une carte",
+    "editCeilings": "Modifier les plafonds"
+  },
+  "beneficiary": {
+    "label": "Libellé",
+    "iban": "IBAN",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "confirmDelete": "Supprimer ce bénéficiaire ?"
+  },
+  "transfer": {
+    "source": "IBAN émetteur",
+    "destination": "IBAN destinataire",
+    "minAmount": "Montant min",
+    "maxAmount": "Montant max",
+    "currency": "Devise",
+    "after": "Après",
+    "before": "Avant",
+    "label": "Libellé contient",
+    "amount": "Montant",
+    "timestamp": "Date",
+    "filter": "Filtrer",
+    "reset": "Réinitialiser",
+    "noResults": "Aucun mouvement."
+  },
+  "payment": {
+    "createTitle": "Nouveau paiement",
+    "amount": "Montant",
+    "currency": "Devise",
+    "destination": "Bénéficiaire",
+    "selectBeneficiary": "Choisir un bénéficiaire",
+    "noPayments": "Aucun paiement.",
+    "from": "Depuis",
+    "to": "Jusqu'à",
+    "accepted": "Accepté",
+    "declined": "Refusé"
+  },
+  "actions": {
+    "add": "Ajouter",
+    "create": "Créer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "close": "Fermer",
+    "loading": "Chargement…"
+  },
+  "errors": {
+    "loadFailed": "Chargement impossible.",
+    "actionFailed": "L'opération a échoué."
+  },
+  "page": {
+    "previous": "Précédent",
+    "next": "Suivant",
+    "page": "Page"
+  }
+}
