@@ -1,0 +1,108 @@
+{
+  "app": {
+    "title": "REST hero",
+    "tagline": "Your online bank, simplified."
+  },
+  "nav": {
+    "home": "Home",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "language": "Language"
+  },
+  "home": {
+    "welcome": "Welcome",
+    "welcomeAnon": "Sign in to access your banking area.",
+    "signInCta": "Sign in",
+    "details": "Details",
+    "accounts": "Accounts",
+    "beneficiaries": "Beneficiaries",
+    "selectCustomer": "Select a customer",
+    "searchCustomer": "Search by name, email…",
+    "addCustomer": "Add customer",
+    "addAccount": "Add account",
+    "addBeneficiary": "Add beneficiary",
+    "noAccounts": "No accounts.",
+    "noBeneficiaries": "No beneficiaries.",
+    "noCustomerSelected": "No customer selected."
+  },
+  "user": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "username": "Username"
+  },
+  "account": {
+    "iban": "IBAN",
+    "currency": "Currency",
+    "balance": "Balance",
+    "info": "Info",
+    "cards": "Cards",
+    "movements": "Movements",
+    "back": "Back"
+  },
+  "card": {
+    "number": "Number",
+    "transactionCeiling": "Per-transaction ceiling",
+    "rolling30Ceiling": "30-day rolling ceiling",
+    "active": "Active",
+    "info": "Info",
+    "payments": "Payments",
+    "pay": "Pay",
+    "addCard": "Add card",
+    "editCeilings": "Edit ceilings"
+  },
+  "beneficiary": {
+    "label": "Label",
+    "iban": "IBAN",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirmDelete": "Delete this beneficiary?"
+  },
+  "transfer": {
+    "source": "Source IBAN",
+    "destination": "Destination IBAN",
+    "minAmount": "Min amount",
+    "maxAmount": "Max amount",
+    "currency": "Currency",
+    "after": "After",
+    "before": "Before",
+    "label": "Label contains",
+    "amount": "Amount",
+    "timestamp": "Date",
+    "filter": "Filter",
+    "reset": "Reset",
+    "noResults": "No movements."
+  },
+  "payment": {
+    "createTitle": "New payment",
+    "amount": "Amount",
+    "currency": "Currency",
+    "destination": "Beneficiary",
+    "selectBeneficiary": "Select a beneficiary",
+    "noPayments": "No payments.",
+    "from": "From",
+    "to": "To",
+    "accepted": "Accepted",
+    "declined": "Declined"
+  },
+  "actions": {
+    "add": "Add",
+    "create": "Create",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "loading": "Loading…"
+  },
+  "errors": {
+    "loadFailed": "Failed to load.",
+    "actionFailed": "The operation failed."
+  },
+  "page": {
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page"
+  }
+}
