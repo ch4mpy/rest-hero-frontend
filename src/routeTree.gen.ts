@@ -10,22 +10,22 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AccountsIbanRouteImport } from './routes/accounts.$iban'
 import { Route as CardsCardNumberRouteImport } from './routes/cards.$cardNumber'
+import { Route as AccountsIbanRouteImport } from './routes/accounts.$iban'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AccountsIbanRoute = AccountsIbanRouteImport.update({
-  id: '/accounts/$iban',
-  path: '/accounts/$iban',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CardsCardNumberRoute = CardsCardNumberRouteImport.update({
   id: '/cards/$cardNumber',
   path: '/cards/$cardNumber',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountsIbanRoute = AccountsIbanRouteImport.update({
+  id: '/accounts/$iban',
+  path: '/accounts/$iban',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -68,18 +68,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/accounts/$iban': {
-      id: '/accounts/$iban'
-      path: '/accounts/$iban'
-      fullPath: '/accounts/$iban'
-      preLoaderRoute: typeof AccountsIbanRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/cards/$cardNumber': {
       id: '/cards/$cardNumber'
       path: '/cards/$cardNumber'
       fullPath: '/cards/$cardNumber'
       preLoaderRoute: typeof CardsCardNumberRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/accounts/$iban': {
+      id: '/accounts/$iban'
+      path: '/accounts/$iban'
+      fullPath: '/accounts/$iban'
+      preLoaderRoute: typeof AccountsIbanRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
