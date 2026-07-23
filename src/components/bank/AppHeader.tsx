@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "@tanstack/react-router";
-import { useMe, hasAuthority, isAuthenticated } from "@/lib/auth";
-import { gatewayApi } from "../../apis";
+import { useMe, hasAuthority, isAuthenticated, startLogin, logout } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { setLocale, type Locale } from "@/i18n";
 import {
