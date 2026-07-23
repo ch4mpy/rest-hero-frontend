@@ -49,13 +49,13 @@ export function AppHeader() {
                   </span>
                 ) : null}
               </span>
-              <Button variant="outline" size="sm" onClick={() => void gatewayApi.logout()}>
+              <Button variant="outline" size="sm" onClick={() => void logout()}>
                 <LogOut className="mr-1 h-4 w-4" aria-hidden />
                 {t("nav.signOut")}
               </Button>
             </>
           ) : (
-            <Button size="sm" onClick={() => void gatewayApi.startLoginWithGateway()}>
+            <Button size="sm" onClick={() => void startLogin()}>
               <LogIn className="mr-1 h-4 w-4" aria-hidden />
               {t("nav.signIn")}
             </Button>
