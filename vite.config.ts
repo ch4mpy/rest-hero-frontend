@@ -10,7 +10,7 @@ export default defineConfig({
   vite: {
     base: "/ui",
     server: {
-      allowedHosts: ["host.docker.internal"],
+      allowedHosts: ["localhost", "host.docker.internal"],
     },
   },
   tanstackStart: {
