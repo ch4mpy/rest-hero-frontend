@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { cardService } from "@/rest/services";
+import { cardApi } from "../../apis";
 import { toast } from "sonner";
 
 interface Props {
@@ -26,7 +26,8 @@ export function CardFormDialog({ open, onOpenChange, iban }: Props) {
   const [rolling30Ceiling, setRolling30Ceiling] = useState(200000);
 
   const mutation = useMutation({
-    mutationFn: () => cardService.createCard({ iban, transactionCeiling, rolling30Ceiling }),
+    mutationFn: () =>
+      cardApi.createCard({ cardRequest: { iban, transactionCeiling, rolling30Ceiling } }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["cards", iban] });
       onOpenChange(false);

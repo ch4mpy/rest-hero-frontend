@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { cardService, customerService } from "@/rest/services";
+import { cardApi, customerApi } from "../../apis";
 import { toast } from "sonner";
 
 interface Props {
@@ -36,17 +36,20 @@ export function PaymentFormDialog({ open, onOpenChange, cardNumber, customerId, 
 
   const { data: beneficiaries } = useQuery({
     queryKey: ["beneficiaries", customerId],
-    queryFn: () => customerService.listBeneficiaries(customerId),
+    queryFn: () => customerApi.listBeneficiaries({ customerId }),
     enabled: open,
   });
 
   const mutation = useMutation({
     mutationFn: () =>
-      cardService.createPayment(cardNumber, {
-        destinationIban,
-        amount,
-        currency,
+      cardApi.createCardPayment({
         cardNumber,
+        cardPaymentCreationRequest: {
+          destinationIban,
+          amount,
+          currency,
+          cardNumber,
+        },
       }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["payments", cardNumber] });

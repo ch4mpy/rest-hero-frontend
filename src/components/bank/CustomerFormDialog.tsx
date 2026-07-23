@@ -11,8 +11,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { customerService } from "@/rest/services";
-import type { CustomerResponse } from "@/rest/types";
+import { customerApi } from "../../apis";
+import type { CustomerResponse } from "@/rest/customer";
 import { toast } from "sonner";
 
 interface Props {
@@ -29,9 +29,9 @@ export function CustomerFormDialog({ open, onOpenChange, onCreated }: Props) {
 
   const mutation = useMutation({
     mutationFn: async () => {
-      await customerService.createCustomer({ firstName, lastName, email });
-      const page = await customerService.listCustomers({ search: email, size: 1 });
-      return page.content[0];
+      await customerApi.createCustomer({ customerCreationRequest: { firstName, lastName, email } });
+      const page = await customerApi.listCustomers({ search: email, size: 1 });
+      return page.content?.[0];
     },
     onSuccess: (created) => {
       qc.invalidateQueries({ queryKey: ["customers"] });
@@ -59,15 +59,31 @@ export function CustomerFormDialog({ open, onOpenChange, onCreated }: Props) {
         >
           <div className="grid gap-1.5">
             <Label htmlFor="firstName">{t("user.firstName")}</Label>
-            <Input id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+            <Input
+              id="firstName"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            />
           </div>
           <div className="grid gap-1.5">
             <Label htmlFor="lastName">{t("user.lastName")}</Label>
-            <Input id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+            <Input
+              id="lastName"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+            />
           </div>
           <div className="grid gap-1.5">
             <Label htmlFor="email">{t("user.email")}</Label>
-            <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            <Input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </div>
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>

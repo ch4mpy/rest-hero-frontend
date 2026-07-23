@@ -15,7 +15,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Plus, ChevronRight, ArrowLeft } from "lucide-react";
-import { accountService, cardService } from "@/rest/services";
+import { accountApi, cardApi, transfersApi } from "../apis";
 import { formatAmount, formatDate, maskCardNumber } from "@/lib/format";
 import { hasAuthority, useMe } from "@/lib/auth";
 import { CardFormDialog } from "@/components/bank/CardFormDialog";
@@ -53,33 +53,40 @@ function AccountDetails() {
 
   const { data: account } = useQuery({
     queryKey: ["account", iban],
-    queryFn: () => accountService.getAccount(iban),
+    queryFn: () => accountApi.getAccount({ iban }),
   });
   const { data: cards } = useQuery({
     queryKey: ["cards", iban],
-    queryFn: () => cardService.listCards(iban),
+    queryFn: () => cardApi.listCards({ iban }),
   });
   const { data: transfers } = useQuery({
     queryKey: ["transfers", iban, filters],
-    queryFn: () =>
-      accountService.listTransfers({
+    queryFn: () => {
+      const { timestampAfter, timestampBefore, ...rest } = filters;
+      return transfersApi.listMoneyTransfers({
         sourceIban: iban,
-        ...filters,
-      }),
+        ...rest,
+        ...(timestampAfter && { timestampAfter: new Date(timestampAfter) }),
+        ...(timestampBefore && { timestampBefore: new Date(timestampBefore) }),
+      });
+    },
   });
   const { data: transfersIn } = useQuery({
     queryKey: ["transfers-in", iban, filters],
-    queryFn: () =>
-      accountService.listTransfers({
+    queryFn: () => {
+      const { timestampAfter, timestampBefore, ...rest } = filters;
+      return transfersApi.listMoneyTransfers({
         destinationIban: iban,
-        ...filters,
-      }),
+        ...rest,
+        ...(timestampAfter && { timestampAfter: new Date(timestampAfter) }),
+        ...(timestampBefore && { timestampBefore: new Date(timestampBefore) }),
+      });
+    },
   });
 
-  const allMovements = [
-    ...(transfers?.content ?? []),
-    ...(transfersIn?.content ?? []),
-  ].sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+  const allMovements = [...(transfers?.content ?? []), ...(transfersIn?.content ?? [])].sort(
+    (a, b) => new Date(b?.timestamp ?? 0).getTime() - new Date(a?.timestamp ?? 0).getTime(),
+  );
 
   return (
     <div className="grid gap-6">
@@ -100,10 +107,10 @@ function AccountDetails() {
           <Row label={t("account.iban")} value={iban} />
           {account ? (
             <>
-              <Row label={t("account.currency")} value={account.currency} />
+              <Row label={t("account.currency")} value={account.currency ?? ""} />
               <Row
                 label={t("account.balance")}
-                value={formatAmount(account.balance, account.currency)}
+                value={formatAmount(account.balance ?? 0, account.currency ?? "")}
               />
             </>
           ) : null}
@@ -261,7 +268,7 @@ function AccountDetails() {
               <TableBody>
                 {allMovements.map((m, i) => (
                   <TableRow key={`${m.timestamp}-${i}`}>
-                    <TableCell>{formatDate(m.timestamp)}</TableCell>
+                    <TableCell>{m.timestamp ? formatDate(m.timestamp.toString()) : ""}</TableCell>
                     <TableCell className="font-mono text-xs">{m.sourceIban}</TableCell>
                     <TableCell className="font-mono text-xs">{m.destinationIban}</TableCell>
                     <TableCell>{m.label}</TableCell>
@@ -271,7 +278,7 @@ function AccountDetails() {
                       }`}
                     >
                       {m.destinationIban === iban ? "+" : "-"}
-                      {formatAmount(m.amount, m.currency)}
+                      {formatAmount(m.amount ?? 0, m.currency ?? "")}
                     </TableCell>
                   </TableRow>
                 ))}

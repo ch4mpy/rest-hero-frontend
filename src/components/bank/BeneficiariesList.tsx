@@ -4,8 +4,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Pencil, Trash2, Plus } from "lucide-react";
-import { customerService } from "@/rest/services";
-import type { BeneficiaryResponse } from "@/rest/types";
+import { customerApi } from "../../apis";
+import type { BeneficiaryResponse, ListBeneficiariesRequest } from "@/rest/customer";
 import { BeneficiaryFormDialog } from "./BeneficiaryFormDialog";
 import {
   AlertDialog,
@@ -41,11 +41,12 @@ export function BeneficiariesList({
 
   const { data } = useQuery({
     queryKey: ["beneficiaries", customerId],
-    queryFn: () => customerService.listBeneficiaries(customerId),
+    queryFn: () => customerApi.listBeneficiaries({ customerId }),
   });
 
   const del = useMutation({
-    mutationFn: (b: BeneficiaryResponse) => customerService.deleteBeneficiary(customerId, b.id),
+    mutationFn: (b: BeneficiaryResponse) =>
+      customerApi.deleteBeneficiary({ customerId, beneficiaryId: b.id }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["beneficiaries", customerId] });
       setDeleting(null);

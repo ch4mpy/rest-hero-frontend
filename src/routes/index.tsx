@@ -6,8 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus, LogIn, ChevronRight } from "lucide-react";
 import { hasAuthority, isAuthenticated, useMe } from "@/lib/auth";
-import { accountService, customerService, gatewayService } from "@/rest/services";
-import type { CustomerResponse } from "@/rest/types";
+import { accountApi, customerApi, gatewayApi } from "../apis";
+import type { CustomerResponse } from "@/rest/customer";
 import { CustomerSelector } from "@/components/bank/CustomerSelector";
 import { CustomerFormDialog } from "@/components/bank/CustomerFormDialog";
 import { AccountFormDialog } from "@/components/bank/AccountFormDialog";
@@ -18,7 +18,10 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "REST hero — Home" },
-      { name: "description", content: "Home page listing your accounts and beneficiaries in REST hero online banking." },
+      {
+        name: "description",
+        content: "Home page listing your accounts and beneficiaries in REST hero online banking.",
+      },
       { property: "og:title", content: "REST hero — Home" },
       { property: "og:description", content: "Your accounts and beneficiaries." },
     ],
@@ -48,7 +51,7 @@ function HomePage() {
 
   const { data: customerData } = useQuery({
     queryKey: ["customer", customerId],
-    queryFn: () => customerService.getCustomer(customerId as string),
+    queryFn: () => customerApi.getCustomer({ customerId: customerId as string }),
     enabled: !!customerId && canReadAny,
   });
 
@@ -72,7 +75,7 @@ function HomePage() {
       <div className="mx-auto max-w-md text-center">
         <h1 className="mb-4 font-serif text-4xl text-foreground">{t("home.welcome")}</h1>
         <p className="mb-6 text-muted-foreground">{t("home.welcomeAnon")}</p>
-        <Button size="lg" onClick={() => void gatewayService.startLogin()}>
+        <Button size="lg" onClick={() => void gatewayApi.startLoginWithGateway()}>
           <LogIn className="mr-2 h-4 w-4" aria-hidden />
           {t("home.signInCta")}
         </Button>
@@ -103,10 +106,7 @@ function HomePage() {
             onAdd={() => setAccountDialogOpen(true)}
           />
           <div className="md:col-span-2">
-            <BeneficiariesList
-              customerId={displayedCustomer.id}
-              canEdit={canEditBeneficiaries}
-            />
+            <BeneficiariesList customerId={displayedCustomer.id} canEdit={canEditBeneficiaries} />
           </div>
         </div>
       ) : (
@@ -157,7 +157,7 @@ function AccountsCard({
   const { t } = useTranslation();
   const { data } = useQuery({
     queryKey: ["accounts", customerId],
-    queryFn: () => accountService.listAccounts(customerId),
+    queryFn: () => accountApi.listAccounts({ customerId }),
   });
   return (
     <Card>
@@ -171,13 +171,13 @@ function AccountsCard({
               <li key={a.iban}>
                 <Link
                   to="/accounts/$iban"
-                  params={{ iban: a.iban }}
+                  params={{ iban: a.iban ?? "" }}
                   className="flex items-center justify-between py-3 no-underline hover:bg-accent/10"
                 >
                   <div>
                     <div className="font-medium">{a.iban}</div>
                     <div className="text-xs text-muted-foreground">
-                      {formatAmount(a.balance, a.currency)}
+                      {formatAmount(a.balance ?? 0, a.currency ?? "")}
                     </div>
                   </div>
                   <ChevronRight className="h-4 w-4 text-muted-foreground" aria-hidden />

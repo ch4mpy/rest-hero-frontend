@@ -11,8 +11,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { cardService } from "@/rest/services";
-import type { CardResponse } from "@/rest/types";
+import { cardApi } from "../../apis";
+import type { CardResponse } from "@/rest/card";
 import { toast } from "sonner";
 
 interface Props {
@@ -35,9 +35,12 @@ export function CardCeilingsDialog({ open, onOpenChange, card }: Props) {
 
   const mutation = useMutation({
     mutationFn: () =>
-      cardService.setCeilings(card.number, {
-        transactionCeiling: tx,
-        rolling30Ceiling: r30,
+      cardApi.setCardCeilings({
+        cardNumber: card.number,
+        cardCeilingsRequest: {
+          transactionCeiling: tx,
+          rolling30Ceiling: r30,
+        },
       }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["card", card.number] });
@@ -61,11 +64,25 @@ export function CardCeilingsDialog({ open, onOpenChange, card }: Props) {
         >
           <div className="grid gap-1.5">
             <Label htmlFor="ec-tx">{t("card.transactionCeiling")}</Label>
-            <Input id="ec-tx" type="number" min={0} value={tx} onChange={(e) => setTx(Number(e.target.value))} required />
+            <Input
+              id="ec-tx"
+              type="number"
+              min={0}
+              value={tx}
+              onChange={(e) => setTx(Number(e.target.value))}
+              required
+            />
           </div>
           <div className="grid gap-1.5">
             <Label htmlFor="ec-r30">{t("card.rolling30Ceiling")}</Label>
-            <Input id="ec-r30" type="number" min={0} value={r30} onChange={(e) => setR30(Number(e.target.value))} required />
+            <Input
+              id="ec-r30"
+              type="number"
+              min={0}
+              value={r30}
+              onChange={(e) => setR30(Number(e.target.value))}
+              required
+            />
           </div>
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>

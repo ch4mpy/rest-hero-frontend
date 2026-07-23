@@ -16,7 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ArrowLeft, Pencil, CreditCard } from "lucide-react";
-import { accountService, cardService } from "@/rest/services";
+import { accountApi, cardApi } from "../apis";
 import { formatAmount, formatDate, maskCardNumber } from "@/lib/format";
 import { hasAuthority, useMe } from "@/lib/auth";
 import { CardCeilingsDialog } from "@/components/bank/CardCeilingsDialog";
@@ -50,28 +50,30 @@ function CardDetails() {
 
   const { data: card } = useQuery({
     queryKey: ["card", cardNumber],
-    queryFn: () => cardService.getCard(cardNumber),
+    queryFn: () => cardApi.getCard({ cardNumber }),
   });
 
   const { data: account } = useQuery({
     queryKey: ["account", card?.iban],
-    queryFn: () => accountService.getAccount(card!.iban),
+    queryFn: () => accountApi.getAccount({ iban: card!.iban }),
     enabled: !!card?.iban,
   });
 
   const { data: payments } = useQuery({
     queryKey: ["payments", cardNumber, from, to],
     queryFn: () =>
-      cardService.listPayments(cardNumber, {
-        from: from || undefined,
-        to: to || undefined,
+      cardApi.listCardPayments({
+        cardNumber,
+        from: from ? new Date(from) : undefined,
+        to: to ? new Date(to) : undefined,
       }),
   });
 
   const isOwner = !!(account && me?.sub && account.customerId === me.sub);
 
   const statusMutation = useMutation({
-    mutationFn: (isActive: boolean) => cardService.setStatus(cardNumber, { isActive }),
+    mutationFn: (isActive: boolean) =>
+      cardApi.setCardStatus({ cardNumber, cardStatusRequest: { isActive } }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["card", cardNumber] }),
     onError: () => toast.error(t("errors.actionFailed")),
   });
@@ -80,7 +82,10 @@ function CardDetails() {
     <div className="grid gap-6">
       <div>
         <Button asChild variant="ghost" size="sm">
-          <Link to={card ? "/accounts/$iban" : "/"} params={card ? { iban: card.iban } : ({} as never)}>
+          <Link
+            to={card ? "/accounts/$iban" : "/"}
+            params={card ? { iban: card.iban } : ({} as never)}
+          >
             <ArrowLeft className="mr-1 h-4 w-4" aria-hidden />
             {t("account.back")}
           </Link>
@@ -119,9 +124,7 @@ function CardDetails() {
                     disabled={!canEditStatus || statusMutation.isPending}
                     aria-label={t("card.active")}
                   />
-                  <span className="text-sm">
-                    {card.isActive ? t("card.active") : "—"}
-                  </span>
+                  <span className="text-sm">{card.isActive ? t("card.active") : "—"}</span>
                 </div>
               </div>
             </>
@@ -176,13 +179,13 @@ function CardDetails() {
               <TableBody>
                 {payments.map((p) => (
                   <TableRow key={p.id}>
-                    <TableCell>{formatDate(p.timestamp)}</TableCell>
+                    <TableCell>{formatDate(p.timestamp.toString())}</TableCell>
                     <TableCell className="font-mono text-xs">{p.destinationIban}</TableCell>
-                    <TableCell className="text-right">{formatAmount(p.amount, p.currency)}</TableCell>
+                    <TableCell className="text-right">
+                      {formatAmount(p.amount, p.currency)}
+                    </TableCell>
                     <TableCell>
-                      {p.isAccepted === false
-                        ? t("payment.declined")
-                        : t("payment.accepted")}
+                      {p.isAccepted === false ? t("payment.declined") : t("payment.accepted")}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -197,7 +200,7 @@ function CardDetails() {
       {card ? (
         <CardCeilingsDialog open={ceilingsOpen} onOpenChange={setCeilingsOpen} card={card} />
       ) : null}
-      {card && account ? (
+      {card && account && account.customerId && account.currency ? (
         <PaymentFormDialog
           open={payOpen}
           onOpenChange={setPayOpen}

@@ -11,8 +11,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { accountService } from "@/rest/services";
 import { toast } from "sonner";
+import { accountApi } from "../../apis";
 
 interface Props {
   open: boolean;
@@ -23,15 +23,16 @@ export function AccountFormDialog({ open, onOpenChange, customerId }: Props) {
   const { t } = useTranslation();
   const qc = useQueryClient();
   const [iban, setIban] = useState("");
-  const [currency, setCurrency] = useState("EUR");
+  const [currency, setCurrency] = useState("XPF");
 
   const mutation = useMutation({
-    mutationFn: () => accountService.createAccount({ iban, customerId, currency }),
+    mutationFn: () =>
+      accountApi.createAccount({ accountCreationRequest: { iban, customerId, currency } }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["accounts", customerId] });
       onOpenChange(false);
       setIban("");
-      setCurrency("EUR");
+      setCurrency("XPF");
     },
     onError: () => toast.error(t("errors.actionFailed")),
   });
@@ -55,7 +56,13 @@ export function AccountFormDialog({ open, onOpenChange, customerId }: Props) {
           </div>
           <div className="grid gap-1.5">
             <Label htmlFor="currency">{t("account.currency")}</Label>
-            <Input id="currency" maxLength={3} value={currency} onChange={(e) => setCurrency(e.target.value.toUpperCase())} required />
+            <Input
+              id="currency"
+              maxLength={3}
+              value={currency}
+              onChange={(e) => setCurrency(e.target.value.toUpperCase())}
+              required
+            />
           </div>
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>

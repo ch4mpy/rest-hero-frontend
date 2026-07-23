@@ -35,9 +35,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold text-foreground">
-          This page didn't load
-        </h1>
+        <h1 className="text-xl font-semibold text-foreground">This page didn't load</h1>
         <p className="mt-2 text-sm text-muted-foreground">{error.message}</p>
         <div className="mt-6">
           <button
@@ -61,7 +59,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "REST hero — Online banking" },
-      { name: "description", content: "REST hero, a simplified online bank frontend for accounts, cards, transfers and beneficiaries." },
+      {
+        name: "description",
+        content:
+          "REST hero, a simplified online bank frontend for accounts, cards, transfers and beneficiaries.",
+      },
       { property: "og:title", content: "REST hero — Online banking" },
       { property: "og:description", content: "REST hero, a simplified online bank frontend." },
       { property: "og:type", content: "website" },

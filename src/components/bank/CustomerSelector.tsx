@@ -1,11 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
   Command,
   CommandEmpty,
@@ -16,8 +12,8 @@ import {
 } from "@/components/ui/command";
 import { Button } from "@/components/ui/button";
 import { ChevronsUpDown, Check } from "lucide-react";
-import { customerService } from "@/rest/services";
-import type { CustomerResponse } from "@/rest/types";
+import { customerApi } from "../../apis";
+import type { CustomerResponse } from "@/rest/customer";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -31,7 +27,7 @@ export function CustomerSelector({ value, onChange }: Props) {
 
   const { data } = useQuery({
     queryKey: ["customers", "search", search],
-    queryFn: () => customerService.listCustomers({ search: search || undefined, size: 20 }),
+    queryFn: () => customerApi.listCustomers({ search: search || undefined, size: 20 }),
     staleTime: 30_000,
   });
 
@@ -60,7 +56,7 @@ export function CustomerSelector({ value, onChange }: Props) {
           <CommandList>
             <CommandEmpty>{t("home.noAccounts")}</CommandEmpty>
             <CommandGroup>
-              {data?.content.map((c) => (
+              {data?.content?.map((c) => (
                 <CommandItem
                   key={c.id}
                   value={c.id}
@@ -70,10 +66,7 @@ export function CustomerSelector({ value, onChange }: Props) {
                   }}
                 >
                   <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      value?.id === c.id ? "opacity-100" : "opacity-0",
-                    )}
+                    className={cn("mr-2 h-4 w-4", value?.id === c.id ? "opacity-100" : "opacity-0")}
                     aria-hidden
                   />
                   <div className="flex flex-col">

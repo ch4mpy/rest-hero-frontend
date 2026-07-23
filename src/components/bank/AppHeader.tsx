@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "@tanstack/react-router";
 import { useMe, hasAuthority, isAuthenticated } from "@/lib/auth";
-import { gatewayService } from "@/rest/services";
+import { gatewayApi } from "../../apis";
 import { Button } from "@/components/ui/button";
 import { setLocale, type Locale } from "@/i18n";
 import {
@@ -21,9 +21,7 @@ export function AppHeader() {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
         <Link to="/" className="flex items-baseline gap-2 no-underline">
           <span className="font-serif text-2xl text-primary">{t("app.title")}</span>
-          <span className="hidden text-xs text-muted-foreground sm:inline">
-            {t("app.tagline")}
-          </span>
+          <span className="hidden text-xs text-muted-foreground sm:inline">{t("app.tagline")}</span>
         </Link>
         <nav aria-label={t("nav.home")} className="flex items-center gap-2">
           <DropdownMenu>
@@ -37,9 +35,7 @@ export function AppHeader() {
               <DropdownMenuItem onClick={() => setLocale("fr" as Locale)}>
                 Français
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setLocale("en" as Locale)}>
-                English
-              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setLocale("en" as Locale)}>English</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
@@ -54,13 +50,13 @@ export function AppHeader() {
                   </span>
                 ) : null}
               </span>
-              <Button variant="outline" size="sm" onClick={() => void gatewayService.logout()}>
+              <Button variant="outline" size="sm" onClick={() => void gatewayApi.logout()}>
                 <LogOut className="mr-1 h-4 w-4" aria-hidden />
                 {t("nav.signOut")}
               </Button>
             </>
           ) : (
-            <Button size="sm" onClick={() => void gatewayService.startLogin()}>
+            <Button size="sm" onClick={() => void gatewayApi.startLoginWithGateway()}>
               <LogIn className="mr-1 h-4 w-4" aria-hidden />
               {t("nav.signIn")}
             </Button>

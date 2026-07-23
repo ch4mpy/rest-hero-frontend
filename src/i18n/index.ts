@@ -22,9 +22,9 @@ if (!i18n.isInitialized) {
 export function syncClientLocale() {
   if (typeof window === "undefined") return;
   const stored = window.localStorage.getItem(STORAGE_KEY);
-  const locale = (stored && (SUPPORTED_LOCALES as readonly string[]).includes(stored)
-    ? stored
-    : "fr") as Locale;
+  const locale = (
+    stored && (SUPPORTED_LOCALES as readonly string[]).includes(stored) ? stored : "fr"
+  ) as Locale;
   if (i18n.language !== locale) void i18n.changeLanguage(locale);
   document.documentElement.lang = locale;
 }

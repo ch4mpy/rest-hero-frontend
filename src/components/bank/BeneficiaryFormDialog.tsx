@@ -11,8 +11,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { customerService } from "@/rest/services";
-import type { BeneficiaryResponse } from "@/rest/types";
+import { customerApi } from "../../apis";
+import type { BeneficiaryResponse } from "@/rest/customer";
 import { toast } from "sonner";
 
 interface Props {
@@ -37,8 +37,12 @@ export function BeneficiaryFormDialog({ open, onOpenChange, customerId, benefici
   const mutation = useMutation({
     mutationFn: () =>
       beneficiary
-        ? customerService.updateBeneficiary(customerId, beneficiary.id, { label, iban })
-        : customerService.addBeneficiary(customerId, { label, iban }),
+        ? customerApi.updateBeneficiary({
+            customerId,
+            beneficiaryId: beneficiary.id,
+            beneficiaryRequest: { label, iban },
+          })
+        : customerApi.addBeneficiary({ customerId, beneficiaryRequest: { label, iban } }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["beneficiaries", customerId] });
       onOpenChange(false);
@@ -63,7 +67,12 @@ export function BeneficiaryFormDialog({ open, onOpenChange, customerId, benefici
         >
           <div className="grid gap-1.5">
             <Label htmlFor="ben-label">{t("beneficiary.label")}</Label>
-            <Input id="ben-label" value={label} onChange={(e) => setLabel(e.target.value)} required />
+            <Input
+              id="ben-label"
+              value={label}
+              onChange={(e) => setLabel(e.target.value)}
+              required
+            />
           </div>
           <div className="grid gap-1.5">
             <Label htmlFor="ben-iban">{t("beneficiary.iban")}</Label>

@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { userService } from "@/rest/services";
-import type { UserResponse } from "@/rest/types";
+import { gatewayApi } from "../apis";
+import type { UserResponse } from "@/rest/gateway";
 
 export function useMe() {
   return useQuery({
     queryKey: ["me"],
-    queryFn: () => userService.getMe(),
+    queryFn: () => gatewayApi.getMe(),
     retry: false,
     staleTime: 30_000,
   });

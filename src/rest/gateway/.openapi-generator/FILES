@@ -1,0 +1,12 @@
+apis/GatewayApi.ts
+apis/index.ts
+docs/GatewayApi.md
+docs/ProblemDetail.md
+docs/UserResponse.md
+docs/ValidationProblemDetail.md
+index.ts
+models/ProblemDetail.ts
+models/UserResponse.ts
+models/ValidationProblemDetail.ts
+models/index.ts
+runtime.ts
