@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { gatewayApi } from "../apis";
 import type { UserResponse } from "@/rest/gateway";
+import { ResponseError } from "@/rest/gateway/runtime";
 
 export function useMe() {
   return useQuery({
@@ -24,15 +25,27 @@ export function hasAuthority(user: UserResponse | undefined, authority: string):
   return user.roles.includes(authority);
 }
 
+function navigateToLocation(response: Response | undefined, fallback: string): void {
+  const location = response?.headers.get("Location");
+  window.location.assign(location ?? fallback);
+}
+
 /**
- * Ask the gateway to start an OAuth2 flow. The gateway responds with a
- * `Location` header pointing at the identity provider; the browser must
- * perform a top-level navigation to that URL.
+ * Ask the gateway to start an OAuth2 flow. The gateway returns the
+ * authorization server URI in the response's `Location` header; the
+ * browser must perform a top-level navigation to that URL.
  */
 export async function startLogin(): Promise<void> {
-  const response = await gatewayApi.startLoginWithGatewayRaw({ redirect: "manual" });
-  const location = response.raw.headers.get("Location");
-  window.location.href = location ?? response.raw.url;
+  try {
+    const response = await gatewayApi.startLoginWithGatewayRaw();
+    navigateToLocation(response.raw, window.location.href);
+  } catch (e) {
+    if (e instanceof ResponseError) {
+      navigateToLocation(e.response, window.location.href);
+      return;
+    }
+    throw e;
+  }
 }
 
 /**
@@ -40,7 +53,14 @@ export async function startLogin(): Promise<void> {
  * where to navigate next.
  */
 export async function logout(): Promise<void> {
-  const response = await gatewayApi.logoutRaw({ redirect: "manual" });
-  const location = response.raw.headers.get("Location");
-  window.location.href = location ?? window.location.origin;
+  try {
+    const response = await gatewayApi.logoutRaw();
+    navigateToLocation(response.raw, window.location.origin);
+  } catch (e) {
+    if (e instanceof ResponseError) {
+      navigateToLocation(e.response, window.location.origin);
+      return;
+    }
+    throw e;
+  }
 }
