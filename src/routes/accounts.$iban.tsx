@@ -47,7 +47,7 @@ function AccountDetails() {
   const { iban } = Route.useParams();
   const { t } = useTranslation();
   const { data: me } = useMe();
-  const canCreateCard = hasAuthority(me, "card.create_any");
+  const canCreateCard = hasAuthority(me, "card.create");
   const [cardDialogOpen, setCardDialogOpen] = useState(false);
   const [filters, setFilters] = useState<Filters>({ page: 0, size: 10 });
 
