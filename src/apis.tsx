@@ -10,7 +10,7 @@ import { CardsApi, Configuration as CardConfiguration } from "@/rest/card";
 import { CustomersApi, Configuration as CustomerConfiguration } from "@/rest/customer";
 import { GatewayApi, Configuration as GatewayConfiguration } from "@/rest/gateway";
 
-const GATEWAY_BASE_URL =
+export const GATEWAY_BASE_URL =
   (import.meta.env.VITE_GATEWAY_BASE_URL as string | undefined) ??
   "https://host.docker.internal/gateway";
 
