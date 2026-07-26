@@ -83,7 +83,10 @@
     "from": "From",
     "to": "To",
     "accepted": "Accepted",
-    "declined": "Declined"
+    "declined": "Declined",
+    "previousMonth": "Previous month",
+    "currentMonth": "Current month",
+    "nextMonth": "Next month"
   },
   "actions": {
     "add": "Add",
