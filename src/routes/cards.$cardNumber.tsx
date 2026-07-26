@@ -88,14 +88,19 @@ function CardDetails() {
     enabled: !!card?.iban,
   });
 
+  const fromValid = !!from && !Number.isNaN(new Date(from).getTime());
+  const toValid = !!to && !Number.isNaN(new Date(to).getTime());
+  const rangeValid = fromValid && toValid && new Date(from).getTime() <= new Date(to).getTime();
+
   const { data: payments } = useQuery({
     queryKey: ["payments", cardNumber, from, to],
     queryFn: () =>
       cardApi.listCardPayments({
         cardNumber,
-        from: from ? new Date(from) : undefined,
-        to: to ? new Date(to) : undefined,
+        from: new Date(from),
+        to: new Date(to),
       }),
+    enabled: rangeValid,
   });
 
   const isOwner = !!(account && me?.sub && account.customerId === me.sub);
