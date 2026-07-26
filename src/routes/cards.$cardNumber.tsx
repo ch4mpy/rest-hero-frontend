@@ -45,7 +45,13 @@ function CardDetails() {
 
   const [ceilingsOpen, setCeilingsOpen] = useState(false);
   const [payOpen, setPayOpen] = useState(false);
-  const [from, setFrom] = useState<string>("");
+  const [from, setFrom] = useState<string>(() => {
+    const d = new Date();
+    d.setMonth(d.getMonth() - 1);
+    d.setSeconds(0, 0);
+    const pad = (n: number) => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  });
   const [to, setTo] = useState<string>("");
 
   const { data: card } = useQuery({
