@@ -45,14 +45,32 @@ function CardDetails() {
 
   const [ceilingsOpen, setCeilingsOpen] = useState(false);
   const [payOpen, setPayOpen] = useState(false);
-  const [from, setFrom] = useState<string>(() => {
+  const toLocalInput = (d: Date) => {
+    const pad = (n: number) => String(n).padStart(2, "0");
+    d.setSeconds(0, 0);
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  };
+  const initialFrom = () => {
     const d = new Date();
     d.setMonth(d.getMonth() - 1);
-    d.setSeconds(0, 0);
-    const pad = (n: number) => String(n).padStart(2, "0");
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-  });
-  const [to, setTo] = useState<string>("");
+    return toLocalInput(d);
+  };
+  const initialTo = () => toLocalInput(new Date());
+  const [from, setFrom] = useState<string>(initialFrom);
+  const [to, setTo] = useState<string>(initialTo);
+  const shiftMonths = (months: number) => {
+    const f = new Date(from);
+    const t = new Date(to);
+    f.setMonth(f.getMonth() + months);
+    t.setMonth(t.getMonth() + months);
+    setFrom(toLocalInput(f));
+    setTo(toLocalInput(t));
+  };
+  const resetRange = () => {
+    setFrom(initialFrom());
+    setTo(initialTo());
+  };
+  const showNextMonth = to ? new Date(to).getTime() < Date.now() : false;
 
   const { data: card } = useQuery({
     queryKey: ["card", cardNumber],
