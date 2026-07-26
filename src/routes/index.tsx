@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus, LogIn, ChevronRight } from "lucide-react";
-import { hasAuthority, isAuthenticated, useMe } from "@/lib/auth";
-import { accountApi, customerApi, gatewayApi } from "../apis";
+import { hasAuthority, isAuthenticated, startLogin, useMe } from "@/lib/auth";
+import { accountApi, customerApi } from "../apis";
 import type { CustomerResponse } from "@/rest/customer";
 import { CustomerSelector } from "@/components/bank/CustomerSelector";
 import { CustomerFormDialog } from "@/components/bank/CustomerFormDialog";
@@ -75,7 +75,7 @@ function HomePage() {
       <div className="mx-auto max-w-md text-center">
         <h1 className="mb-4 font-serif text-4xl text-foreground">{t("home.welcome")}</h1>
         <p className="mb-6 text-muted-foreground">{t("home.welcomeAnon")}</p>
-        <Button size="lg" onClick={() => void gatewayApi.startLoginWithGateway()}>
+        <Button size="lg" onClick={() => void startLogin()}>
           <LogIn className="mr-2 h-4 w-4" aria-hidden />
           {t("home.signInCta")}
         </Button>
