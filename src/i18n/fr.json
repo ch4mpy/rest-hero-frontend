@@ -83,7 +83,10 @@
     "from": "Depuis",
     "to": "Jusqu'à",
     "accepted": "Accepté",
-    "declined": "Refusé"
+    "declined": "Refusé",
+    "previousMonth": "Mois précédent",
+    "currentMonth": "Mois en cours",
+    "nextMonth": "Mois suivant"
   },
   "actions": {
     "add": "Ajouter",
