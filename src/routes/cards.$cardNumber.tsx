@@ -55,7 +55,12 @@ function CardDetails() {
     d.setMonth(d.getMonth() - 1);
     return toLocalInput(d);
   };
-  const initialTo = () => toLocalInput(new Date());
+  const initialTo = () => {
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    d.setHours(0, 0, 0, 0);
+    return toLocalInput(d);
+  };
   const [from, setFrom] = useState<string>(initialFrom);
   const [to, setTo] = useState<string>(initialTo);
   const shiftMonths = (months: number) => {
