@@ -99,7 +99,7 @@ export function PeriodFilter({ idPrefix = "period", state }: PeriodFilterProps) 
       </div>
       <div className="flex flex-wrap items-center gap-2 sm:pb-1">
         <Button
-          id={`${idPrefix}-previous-month`}
+          id="previous-month"
           type="button"
           variant="outline"
           size="sm"
@@ -108,7 +108,7 @@ export function PeriodFilter({ idPrefix = "period", state }: PeriodFilterProps) 
           {t("payment.previousMonth")}
         </Button>
         <Button
-          id={`${idPrefix}-current-month`}
+          id="current-month"
           type="button"
           variant="outline"
           size="sm"
@@ -118,7 +118,7 @@ export function PeriodFilter({ idPrefix = "period", state }: PeriodFilterProps) 
         </Button>
         {showNextMonth ? (
           <Button
-            id={`${idPrefix}-next-month`}
+            id="next-month"
             type="button"
             variant="outline"
             size="sm"
@@ -128,6 +128,7 @@ export function PeriodFilter({ idPrefix = "period", state }: PeriodFilterProps) 
           </Button>
         ) : null}
       </div>
+
       <div className="grid gap-1.5">
         <Label htmlFor={toId}>{t("payment.to")}</Label>
         <Input
