@@ -4,8 +4,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import {
   Table,
@@ -21,7 +19,9 @@ import { formatAmount, formatDate, maskCardNumber } from "@/lib/format";
 import { hasAuthority, useMe } from "@/lib/auth";
 import { CardCeilingsDialog } from "@/components/bank/CardCeilingsDialog";
 import { PaymentFormDialog } from "@/components/bank/PaymentFormDialog";
+import { PeriodFilter, usePeriodFilter } from "@/components/bank/PeriodFilter";
 import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/cards/$cardNumber")({
   head: ({ params }) => ({
