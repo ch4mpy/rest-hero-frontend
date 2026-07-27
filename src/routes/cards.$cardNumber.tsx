@@ -4,8 +4,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import {
   Table,
@@ -21,7 +19,9 @@ import { formatAmount, formatDate, maskCardNumber } from "@/lib/format";
 import { hasAuthority, useMe } from "@/lib/auth";
 import { CardCeilingsDialog } from "@/components/bank/CardCeilingsDialog";
 import { PaymentFormDialog } from "@/components/bank/PaymentFormDialog";
+import { PeriodFilter, usePeriodFilter } from "@/components/bank/PeriodFilter";
 import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/cards/$cardNumber")({
   head: ({ params }) => ({
@@ -45,37 +45,8 @@ function CardDetails() {
 
   const [ceilingsOpen, setCeilingsOpen] = useState(false);
   const [payOpen, setPayOpen] = useState(false);
-  const toLocalInput = (d: Date) => {
-    const pad = (n: number) => String(n).padStart(2, "0");
-    d.setSeconds(0, 0);
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-  };
-  const initialFrom = () => {
-    const d = new Date();
-    d.setMonth(d.getMonth() - 1);
-    return toLocalInput(d);
-  };
-  const initialTo = () => {
-    const d = new Date();
-    d.setDate(d.getDate() + 1);
-    d.setHours(0, 0, 0, 0);
-    return toLocalInput(d);
-  };
-  const [from, setFrom] = useState<string>(initialFrom);
-  const [to, setTo] = useState<string>(initialTo);
-  const shiftMonths = (months: number) => {
-    const f = new Date(from);
-    const t = new Date(to);
-    f.setMonth(f.getMonth() + months);
-    t.setMonth(t.getMonth() + months);
-    setFrom(toLocalInput(f));
-    setTo(toLocalInput(t));
-  };
-  const resetRange = () => {
-    setFrom(initialFrom());
-    setTo(initialTo());
-  };
-  const showNextMonth = to ? new Date(to).getTime() < Date.now() : false;
+  const period = usePeriodFilter();
+  const { from, to, rangeValid, fromDate, toDate } = period;
 
   const { data: card } = useQuery({
     queryKey: ["card", cardNumber],
@@ -88,20 +59,17 @@ function CardDetails() {
     enabled: !!card?.iban,
   });
 
-  const fromValid = !!from && !Number.isNaN(new Date(from).getTime());
-  const toValid = !!to && !Number.isNaN(new Date(to).getTime());
-  const rangeValid = fromValid && toValid && new Date(from).getTime() <= new Date(to).getTime();
-
   const { data: payments } = useQuery({
     queryKey: ["payments", cardNumber, from, to],
     queryFn: () =>
       cardApi.listCardPayments({
         cardNumber,
-        from: new Date(from),
-        to: new Date(to),
+        from: fromDate!,
+        to: toDate!,
       }),
     enabled: rangeValid,
   });
+
 
   const isOwner = !!(account && me?.sub && account.customerId === me.sub);
 
@@ -179,59 +147,8 @@ function CardDetails() {
           ) : null}
         </CardHeader>
         <CardContent className="grid gap-4">
-          <div className="grid gap-3 sm:grid-cols-[1fr_auto_1fr] sm:items-end">
-            <div className="grid gap-1.5">
-              <Label htmlFor="pay-from">{t("payment.from")}</Label>
-              <Input
-                id="pay-from"
-                type="datetime-local"
-                required
-                value={from}
-                onChange={(e) => setFrom(e.target.value)}
-              />
-            </div>
-            <div className="flex flex-wrap items-center gap-2 sm:pb-1">
-              <Button
-                id="previous-month"
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => shiftMonths(-1)}
-              >
-                {t("payment.previousMonth")}
-              </Button>
-              <Button
-                id="current-month"
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={resetRange}
-              >
-                {t("payment.currentMonth")}
-              </Button>
-              {showNextMonth ? (
-                <Button
-                  id="next-month"
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => shiftMonths(1)}
-                >
-                  {t("payment.nextMonth")}
-                </Button>
-              ) : null}
-            </div>
-            <div className="grid gap-1.5">
-              <Label htmlFor="pay-to">{t("payment.to")}</Label>
-              <Input
-                id="pay-to"
-                type="datetime-local"
-                required
-                value={to}
-                onChange={(e) => setTo(e.target.value)}
-              />
-            </div>
-          </div>
+          <PeriodFilter idPrefix="pay" state={period} />
+
 
           {payments?.length ? (
             <Table>

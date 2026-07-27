@@ -19,6 +19,8 @@ import { accountApi, cardApi, transfersApi } from "../apis";
 import { formatAmount, formatDate, maskCardNumber } from "@/lib/format";
 import { hasAuthority, useMe } from "@/lib/auth";
 import { CardFormDialog } from "@/components/bank/CardFormDialog";
+import { PeriodFilter, usePeriodFilter } from "@/components/bank/PeriodFilter";
+
 
 export const Route = createFileRoute("/accounts/$iban")({
   head: ({ params }) => ({
@@ -36,8 +38,6 @@ interface Filters {
   minAmount?: number;
   maxAmount?: number;
   currencyIso3?: string;
-  timestampAfter?: string;
-  timestampBefore?: string;
   labelContaining?: string;
   page: number;
   size: number;
@@ -50,6 +50,8 @@ function AccountDetails() {
   const canCreateCard = hasAuthority(me, "card.create");
   const [cardDialogOpen, setCardDialogOpen] = useState(false);
   const [filters, setFilters] = useState<Filters>({ page: 0, size: 10 });
+  const period = usePeriodFilter();
+  const { fromDate, toDate, rangeValid } = period;
 
   const { data: account } = useQuery({
     queryKey: ["account", iban],
@@ -60,29 +62,28 @@ function AccountDetails() {
     queryFn: () => cardApi.listCards({ iban }),
   });
   const { data: transfers } = useQuery({
-    queryKey: ["transfers", iban, filters],
-    queryFn: () => {
-      const { timestampAfter, timestampBefore, ...rest } = filters;
-      return transfersApi.listMoneyTransfers({
+    queryKey: ["transfers", iban, filters, period.from, period.to],
+    queryFn: () =>
+      transfersApi.listMoneyTransfers({
         sourceIban: iban,
-        ...rest,
-        ...(timestampAfter && { timestampAfter: new Date(timestampAfter) }),
-        ...(timestampBefore && { timestampBefore: new Date(timestampBefore) }),
-      });
-    },
+        ...filters,
+        ...(fromDate && { timestampAfter: fromDate }),
+        ...(toDate && { timestampBefore: toDate }),
+      }),
+    enabled: rangeValid,
   });
   const { data: transfersIn } = useQuery({
-    queryKey: ["transfers-in", iban, filters],
-    queryFn: () => {
-      const { timestampAfter, timestampBefore, ...rest } = filters;
-      return transfersApi.listMoneyTransfers({
+    queryKey: ["transfers-in", iban, filters, period.from, period.to],
+    queryFn: () =>
+      transfersApi.listMoneyTransfers({
         destinationIban: iban,
-        ...rest,
-        ...(timestampAfter && { timestampAfter: new Date(timestampAfter) }),
-        ...(timestampBefore && { timestampBefore: new Date(timestampBefore) }),
-      });
-    },
+        ...filters,
+        ...(fromDate && { timestampAfter: fromDate }),
+        ...(toDate && { timestampBefore: toDate }),
+      }),
+    enabled: rangeValid,
   });
+
 
   const allMovements = [...(transfers?.content ?? []), ...(transfersIn?.content ?? [])].sort(
     (a, b) => new Date(b?.timestamp ?? 0).getTime() - new Date(a?.timestamp ?? 0).getTime(),
@@ -218,30 +219,10 @@ function AccountDetails() {
                 }
               />
             </Field>
-            <Field label={t("transfer.after")}>
-              <Input
-                type="datetime-local"
-                value={filters.timestampAfter ?? ""}
-                onChange={(e) =>
-                  setFilters((f) => ({
-                    ...f,
-                    timestampAfter: e.target.value || undefined,
-                  }))
-                }
-              />
-            </Field>
-            <Field label={t("transfer.before")}>
-              <Input
-                type="datetime-local"
-                value={filters.timestampBefore ?? ""}
-                onChange={(e) =>
-                  setFilters((f) => ({
-                    ...f,
-                    timestampBefore: e.target.value || undefined,
-                  }))
-                }
-              />
-            </Field>
+            <div className="col-span-2 md:col-span-4">
+              <PeriodFilter idPrefix="movements" state={period} />
+            </div>
+
             <div className="col-span-2 flex items-end gap-2 md:col-span-4">
               <Button type="submit">{t("transfer.filter")}</Button>
               <Button
