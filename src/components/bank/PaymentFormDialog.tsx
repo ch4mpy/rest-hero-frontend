@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Dialog,
   DialogContent,
@@ -11,15 +11,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { cardApi, customerApi } from "../../apis";
+import { cardApi } from "../../apis";
 import { toast } from "sonner";
+import { BeneficiarySelect } from "./BeneficiarySelect";
 
 interface Props {
   open: boolean;
@@ -33,12 +27,6 @@ export function PaymentFormDialog({ open, onOpenChange, cardNumber, customerId, 
   const qc = useQueryClient();
   const [destinationIban, setDestinationIban] = useState("");
   const [amount, setAmount] = useState(0);
-
-  const { data: beneficiaries } = useQuery({
-    queryKey: ["beneficiaries", customerId],
-    queryFn: () => customerApi.listBeneficiaries({ customerId }),
-    enabled: open,
-  });
 
   const mutation = useMutation({
     mutationFn: () =>
