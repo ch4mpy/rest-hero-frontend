@@ -20,6 +20,7 @@ import { formatAmount, formatDate, maskCardNumber } from "@/lib/format";
 import { hasAuthority, useMe } from "@/lib/auth";
 import { CardFormDialog } from "@/components/bank/CardFormDialog";
 import { PeriodFilter, usePeriodFilter } from "@/components/bank/PeriodFilter";
+import { TransferFormDialog } from "@/components/bank/TransferFormDialog";
 
 
 export const Route = createFileRoute("/accounts/$iban")({
@@ -48,7 +49,9 @@ function AccountDetails() {
   const { t } = useTranslation();
   const { data: me } = useMe();
   const canCreateCard = hasAuthority(me, "card.create");
+  const canTransfer = hasAuthority(me, "account.transfer");
   const [cardDialogOpen, setCardDialogOpen] = useState(false);
+  const [transferDialogOpen, setTransferDialogOpen] = useState(false);
   const [filters, setFilters] = useState<Filters>({ page: 0, size: 10 });
   const period = usePeriodFilter();
   const { fromDate, toDate, rangeValid } = period;
@@ -158,8 +161,13 @@ function AccountDetails() {
       </Card>
 
       <Card>
-        <CardHeader>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0">
           <CardTitle>{t("account.movements")}</CardTitle>
+          {canTransfer && account?.customerId ? (
+            <Button size="sm" onClick={() => setTransferDialogOpen(true)}>
+              {t("transfer.create")}
+            </Button>
+          ) : null}
         </CardHeader>
         <CardContent className="grid gap-4">
           <form
@@ -272,6 +280,15 @@ function AccountDetails() {
       </Card>
 
       <CardFormDialog open={cardDialogOpen} onOpenChange={setCardDialogOpen} iban={iban} />
+      {account?.customerId ? (
+        <TransferFormDialog
+          open={transferDialogOpen}
+          onOpenChange={setTransferDialogOpen}
+          sourceIban={iban}
+          customerId={account.customerId}
+          accountCurrency={account.currency ?? ""}
+        />
+      ) : null}
     </div>
   );
 }

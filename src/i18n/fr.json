@@ -67,11 +67,14 @@
     "after": "Après",
     "before": "Avant",
     "label": "Libellé contient",
+    "labelField": "Libellé",
     "amount": "Montant",
     "timestamp": "Date",
     "filter": "Filtrer",
     "reset": "Réinitialiser",
-    "noResults": "Aucun mouvement."
+    "noResults": "Aucun mouvement.",
+    "createTitle": "Nouveau virement",
+    "create": "+ Virement"
   },
   "payment": {
     "createTitle": "Nouveau paiement",
