@@ -219,30 +219,10 @@ function AccountDetails() {
                 }
               />
             </Field>
-            <Field label={t("transfer.after")}>
-              <Input
-                type="datetime-local"
-                value={filters.timestampAfter ?? ""}
-                onChange={(e) =>
-                  setFilters((f) => ({
-                    ...f,
-                    timestampAfter: e.target.value || undefined,
-                  }))
-                }
-              />
-            </Field>
-            <Field label={t("transfer.before")}>
-              <Input
-                type="datetime-local"
-                value={filters.timestampBefore ?? ""}
-                onChange={(e) =>
-                  setFilters((f) => ({
-                    ...f,
-                    timestampBefore: e.target.value || undefined,
-                  }))
-                }
-              />
-            </Field>
+            <div className="col-span-2 md:col-span-4">
+              <PeriodFilter idPrefix="movements" state={period} />
+            </div>
+
             <div className="col-span-2 flex items-end gap-2 md:col-span-4">
               <Button type="submit">{t("transfer.filter")}</Button>
               <Button
