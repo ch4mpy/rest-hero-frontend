@@ -147,59 +147,8 @@ function CardDetails() {
           ) : null}
         </CardHeader>
         <CardContent className="grid gap-4">
-          <div className="grid gap-3 sm:grid-cols-[1fr_auto_1fr] sm:items-end">
-            <div className="grid gap-1.5">
-              <Label htmlFor="pay-from">{t("payment.from")}</Label>
-              <Input
-                id="pay-from"
-                type="datetime-local"
-                required
-                value={from}
-                onChange={(e) => setFrom(e.target.value)}
-              />
-            </div>
-            <div className="flex flex-wrap items-center gap-2 sm:pb-1">
-              <Button
-                id="previous-month"
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => shiftMonths(-1)}
-              >
-                {t("payment.previousMonth")}
-              </Button>
-              <Button
-                id="current-month"
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={resetRange}
-              >
-                {t("payment.currentMonth")}
-              </Button>
-              {showNextMonth ? (
-                <Button
-                  id="next-month"
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => shiftMonths(1)}
-                >
-                  {t("payment.nextMonth")}
-                </Button>
-              ) : null}
-            </div>
-            <div className="grid gap-1.5">
-              <Label htmlFor="pay-to">{t("payment.to")}</Label>
-              <Input
-                id="pay-to"
-                type="datetime-local"
-                required
-                value={to}
-                onChange={(e) => setTo(e.target.value)}
-              />
-            </div>
-          </div>
+          <PeriodFilter idPrefix="pay" state={period} />
+
 
           {payments?.length ? (
             <Table>
