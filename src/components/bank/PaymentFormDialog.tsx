@@ -61,21 +61,13 @@ export function PaymentFormDialog({ open, onOpenChange, cardNumber, customerId, 
             mutation.mutate();
           }}
         >
-          <div className="grid gap-1.5">
-            <Label htmlFor="pay-ben">{t("payment.destination")}</Label>
-            <Select value={destinationIban} onValueChange={setDestinationIban}>
-              <SelectTrigger id="pay-ben">
-                <SelectValue placeholder={t("payment.selectBeneficiary")} />
-              </SelectTrigger>
-              <SelectContent>
-                {beneficiaries?.map((b) => (
-                  <SelectItem key={b.id} value={b.iban}>
-                    {b.label} — {b.iban}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <BeneficiarySelect
+            id="pay-ben"
+            customerId={customerId}
+            value={destinationIban}
+            onChange={setDestinationIban}
+            enabled={open}
+          />
           <div className="grid gap-1.5">
             <Label htmlFor="pay-amount">
               {t("payment.amount")} ({currency})
