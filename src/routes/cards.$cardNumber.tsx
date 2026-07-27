@@ -45,37 +45,8 @@ function CardDetails() {
 
   const [ceilingsOpen, setCeilingsOpen] = useState(false);
   const [payOpen, setPayOpen] = useState(false);
-  const toLocalInput = (d: Date) => {
-    const pad = (n: number) => String(n).padStart(2, "0");
-    d.setSeconds(0, 0);
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-  };
-  const initialFrom = () => {
-    const d = new Date();
-    d.setMonth(d.getMonth() - 1);
-    return toLocalInput(d);
-  };
-  const initialTo = () => {
-    const d = new Date();
-    d.setDate(d.getDate() + 1);
-    d.setHours(0, 0, 0, 0);
-    return toLocalInput(d);
-  };
-  const [from, setFrom] = useState<string>(initialFrom);
-  const [to, setTo] = useState<string>(initialTo);
-  const shiftMonths = (months: number) => {
-    const f = new Date(from);
-    const t = new Date(to);
-    f.setMonth(f.getMonth() + months);
-    t.setMonth(t.getMonth() + months);
-    setFrom(toLocalInput(f));
-    setTo(toLocalInput(t));
-  };
-  const resetRange = () => {
-    setFrom(initialFrom());
-    setTo(initialTo());
-  };
-  const showNextMonth = to ? new Date(to).getTime() < Date.now() : false;
+  const period = usePeriodFilter();
+  const { from, to, rangeValid, fromDate, toDate } = period;
 
   const { data: card } = useQuery({
     queryKey: ["card", cardNumber],
@@ -88,20 +59,17 @@ function CardDetails() {
     enabled: !!card?.iban,
   });
 
-  const fromValid = !!from && !Number.isNaN(new Date(from).getTime());
-  const toValid = !!to && !Number.isNaN(new Date(to).getTime());
-  const rangeValid = fromValid && toValid && new Date(from).getTime() <= new Date(to).getTime();
-
   const { data: payments } = useQuery({
     queryKey: ["payments", cardNumber, from, to],
     queryFn: () =>
       cardApi.listCardPayments({
         cardNumber,
-        from: new Date(from),
-        to: new Date(to),
+        from: fromDate!,
+        to: toDate!,
       }),
     enabled: rangeValid,
   });
+
 
   const isOwner = !!(account && me?.sub && account.customerId === me.sub);
 
