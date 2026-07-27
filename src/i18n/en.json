@@ -67,11 +67,14 @@
     "after": "After",
     "before": "Before",
     "label": "Label contains",
+    "labelField": "Label",
     "amount": "Amount",
     "timestamp": "Date",
     "filter": "Filter",
     "reset": "Reset",
-    "noResults": "No movements."
+    "noResults": "No movements.",
+    "createTitle": "New wire transfer",
+    "create": "+ Wire transfer"
   },
   "payment": {
     "createTitle": "New payment",
