@@ -74,7 +74,9 @@
     "reset": "Réinitialiser",
     "noResults": "Aucun mouvement.",
     "createTitle": "Nouveau virement",
-    "create": "+ Virement"
+    "create": "+ Virement",
+    "directionTo": "Vers",
+    "directionFrom": "Depuis"
   },
   "payment": {
     "createTitle": "Nouveau paiement",
