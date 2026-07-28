@@ -162,7 +162,7 @@ function AccountDetails() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0">
           <CardTitle>{t("account.movements")}</CardTitle>
-          {canTransfer && account?.customerId ? (
+          {account?.customerId && me?.sub === account.customerId ? (
             <Button size="sm" onClick={() => setTransferDialogOpen(true)}>
               {t("transfer.create")}
             </Button>
