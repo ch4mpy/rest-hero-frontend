@@ -49,7 +49,6 @@ function AccountDetails() {
   const { t } = useTranslation();
   const { data: me } = useMe();
   const canCreateCard = hasAuthority(me, "card.create");
-  const canTransfer = hasAuthority(me, "account.transfer");
   const [cardDialogOpen, setCardDialogOpen] = useState(false);
   const [transferDialogOpen, setTransferDialogOpen] = useState(false);
   const [filters, setFilters] = useState<Filters>({ page: 0, size: 10 });
