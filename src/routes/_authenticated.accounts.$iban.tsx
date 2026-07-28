@@ -23,7 +23,7 @@ import { PeriodFilter, usePeriodFilter } from "@/components/bank/PeriodFilter";
 import { TransferFormDialog } from "@/components/bank/TransferFormDialog";
 
 
-export const Route = createFileRoute("/accounts/$iban")({
+export const Route = createFileRoute("/_authenticated/accounts/$iban")({
   head: ({ params }) => ({
     meta: [
       { title: `Account ${params.iban} — REST hero` },

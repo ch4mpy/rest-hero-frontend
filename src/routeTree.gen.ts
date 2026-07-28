@@ -10,53 +10,59 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as CardsCardNumberRouteImport } from './routes/cards.$cardNumber'
-import { Route as AccountsIbanRouteImport } from './routes/accounts.$iban'
+import { Route as AuthenticatedCardsCardNumberRouteImport } from './routes/_authenticated.cards.$cardNumber'
+import { Route as AuthenticatedAccountsIbanRouteImport } from './routes/_authenticated.accounts.$iban'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CardsCardNumberRoute = CardsCardNumberRouteImport.update({
-  id: '/cards/$cardNumber',
-  path: '/cards/$cardNumber',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AccountsIbanRoute = AccountsIbanRouteImport.update({
-  id: '/accounts/$iban',
-  path: '/accounts/$iban',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const AuthenticatedCardsCardNumberRoute =
+  AuthenticatedCardsCardNumberRouteImport.update({
+    id: '/_authenticated/cards/$cardNumber',
+    path: '/cards/$cardNumber',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AuthenticatedAccountsIbanRoute =
+  AuthenticatedAccountsIbanRouteImport.update({
+    id: '/_authenticated/accounts/$iban',
+    path: '/accounts/$iban',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/accounts/$iban': typeof AccountsIbanRoute
-  '/cards/$cardNumber': typeof CardsCardNumberRoute
+  '/accounts/$iban': typeof AuthenticatedAccountsIbanRoute
+  '/cards/$cardNumber': typeof AuthenticatedCardsCardNumberRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/accounts/$iban': typeof AccountsIbanRoute
-  '/cards/$cardNumber': typeof CardsCardNumberRoute
+  '/accounts/$iban': typeof AuthenticatedAccountsIbanRoute
+  '/cards/$cardNumber': typeof AuthenticatedCardsCardNumberRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/accounts/$iban': typeof AccountsIbanRoute
-  '/cards/$cardNumber': typeof CardsCardNumberRoute
+  '/_authenticated/accounts/$iban': typeof AuthenticatedAccountsIbanRoute
+  '/_authenticated/cards/$cardNumber': typeof AuthenticatedCardsCardNumberRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths: '/' | '/accounts/$iban' | '/cards/$cardNumber'
   fileRoutesByTo: FileRoutesByTo
   to: '/' | '/accounts/$iban' | '/cards/$cardNumber'
-  id: '__root__' | '/' | '/accounts/$iban' | '/cards/$cardNumber'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated/accounts/$iban'
+    | '/_authenticated/cards/$cardNumber'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AccountsIbanRoute: typeof AccountsIbanRoute
-  CardsCardNumberRoute: typeof CardsCardNumberRoute
+  AuthenticatedAccountsIbanRoute: typeof AuthenticatedAccountsIbanRoute
+  AuthenticatedCardsCardNumberRoute: typeof AuthenticatedCardsCardNumberRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -68,18 +74,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/cards/$cardNumber': {
-      id: '/cards/$cardNumber'
+    '/_authenticated/cards/$cardNumber': {
+      id: '/_authenticated/cards/$cardNumber'
       path: '/cards/$cardNumber'
       fullPath: '/cards/$cardNumber'
-      preLoaderRoute: typeof CardsCardNumberRouteImport
+      preLoaderRoute: typeof AuthenticatedCardsCardNumberRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/accounts/$iban': {
-      id: '/accounts/$iban'
+    '/_authenticated/accounts/$iban': {
+      id: '/_authenticated/accounts/$iban'
       path: '/accounts/$iban'
       fullPath: '/accounts/$iban'
-      preLoaderRoute: typeof AccountsIbanRouteImport
+      preLoaderRoute: typeof AuthenticatedAccountsIbanRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -87,8 +93,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AccountsIbanRoute: AccountsIbanRoute,
-  CardsCardNumberRoute: CardsCardNumberRoute,
+  AuthenticatedAccountsIbanRoute: AuthenticatedAccountsIbanRoute,
+  AuthenticatedCardsCardNumberRoute: AuthenticatedCardsCardNumberRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

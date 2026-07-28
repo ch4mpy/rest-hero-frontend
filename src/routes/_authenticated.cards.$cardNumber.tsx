@@ -23,7 +23,7 @@ import { PeriodFilter, usePeriodFilter } from "@/components/bank/PeriodFilter";
 import { toast } from "sonner";
 
 
-export const Route = createFileRoute("/cards/$cardNumber")({
+export const Route = createFileRoute("/_authenticated/cards/$cardNumber")({
   head: ({ params }) => ({
     meta: [
       { title: `Card ${params.cardNumber} — REST hero` },
