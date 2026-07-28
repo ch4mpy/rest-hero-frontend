@@ -1,15 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, queryOptions } from "@tanstack/react-query";
 import { gatewayApi } from "../apis";
 import type { UserResponse } from "@/rest/gateway";
 import { ResponseError } from "@/rest/gateway/runtime";
 
+export const meQueryOptions = queryOptions({
+  queryKey: ["me"],
+  queryFn: () => gatewayApi.getMe(),
+  retry: false,
+  staleTime: 30_000,
+});
+
 export function useMe() {
-  return useQuery({
-    queryKey: ["me"],
-    queryFn: () => gatewayApi.getMe(),
-    retry: false,
-    staleTime: 30_000,
-  });
+  return useQuery(meQueryOptions);
 }
 
 export function isAuthenticated(user?: UserResponse): boolean {
@@ -23,6 +25,11 @@ export function isAdvisor(user?: UserResponse): boolean {
 export function hasAuthority(user: UserResponse | undefined, authority: string): boolean {
   if (!user?.roles) return false;
   return user.roles.includes(authority);
+}
+
+function homeUrl(): string {
+  const base = (import.meta.env.BASE_URL ?? "/") as string;
+  return new URL(base, window.location.origin).toString();
 }
 
 function navigateToLocation(response: Response | undefined, fallback: string): void {
@@ -49,18 +56,13 @@ export async function startLogin(): Promise<void> {
 }
 
 /**
- * Log out via the gateway. The response's `Location` header describes
- * where to navigate next.
+ * Log out via the gateway, then always land the user on the app home page.
  */
 export async function logout(): Promise<void> {
   try {
-    const response = await gatewayApi.logoutRaw();
-    navigateToLocation(response.raw, window.location.origin);
+    await gatewayApi.logoutRaw();
   } catch (e) {
-    if (e instanceof ResponseError) {
-      navigateToLocation(e.response, window.location.origin);
-      return;
-    }
-    throw e;
+    if (!(e instanceof ResponseError)) throw e;
   }
+  window.location.assign(homeUrl());
 }
