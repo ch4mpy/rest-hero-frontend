@@ -9,58 +9,77 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AccountsIbanRouteImport } from './routes/accounts.$iban'
-import { Route as CardsCardNumberRouteImport } from './routes/cards.$cardNumber'
+import { Route as AuthenticatedCardsCardNumberRouteImport } from './routes/_authenticated.cards.$cardNumber'
+import { Route as AuthenticatedAccountsIbanRouteImport } from './routes/_authenticated.accounts.$iban'
 
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AccountsIbanRoute = AccountsIbanRouteImport.update({
-  id: '/accounts/$iban',
-  path: '/accounts/$iban',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CardsCardNumberRoute = CardsCardNumberRouteImport.update({
-  id: '/cards/$cardNumber',
-  path: '/cards/$cardNumber',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const AuthenticatedCardsCardNumberRoute =
+  AuthenticatedCardsCardNumberRouteImport.update({
+    id: '/cards/$cardNumber',
+    path: '/cards/$cardNumber',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAccountsIbanRoute =
+  AuthenticatedAccountsIbanRouteImport.update({
+    id: '/accounts/$iban',
+    path: '/accounts/$iban',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/accounts/$iban': typeof AccountsIbanRoute
-  '/cards/$cardNumber': typeof CardsCardNumberRoute
+  '/accounts/$iban': typeof AuthenticatedAccountsIbanRoute
+  '/cards/$cardNumber': typeof AuthenticatedCardsCardNumberRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/accounts/$iban': typeof AccountsIbanRoute
-  '/cards/$cardNumber': typeof CardsCardNumberRoute
+  '/accounts/$iban': typeof AuthenticatedAccountsIbanRoute
+  '/cards/$cardNumber': typeof AuthenticatedCardsCardNumberRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/accounts/$iban': typeof AccountsIbanRoute
-  '/cards/$cardNumber': typeof CardsCardNumberRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/_authenticated/accounts/$iban': typeof AuthenticatedAccountsIbanRoute
+  '/_authenticated/cards/$cardNumber': typeof AuthenticatedCardsCardNumberRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths: '/' | '/accounts/$iban' | '/cards/$cardNumber'
   fileRoutesByTo: FileRoutesByTo
   to: '/' | '/accounts/$iban' | '/cards/$cardNumber'
-  id: '__root__' | '/' | '/accounts/$iban' | '/cards/$cardNumber'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/_authenticated/accounts/$iban'
+    | '/_authenticated/cards/$cardNumber'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AccountsIbanRoute: typeof AccountsIbanRoute
-  CardsCardNumberRoute: typeof CardsCardNumberRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -68,38 +87,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/accounts/$iban': {
-      id: '/accounts/$iban'
-      path: '/accounts/$iban'
-      fullPath: '/accounts/$iban'
-      preLoaderRoute: typeof AccountsIbanRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cards/$cardNumber': {
-      id: '/cards/$cardNumber'
+    '/_authenticated/cards/$cardNumber': {
+      id: '/_authenticated/cards/$cardNumber'
       path: '/cards/$cardNumber'
       fullPath: '/cards/$cardNumber'
-      preLoaderRoute: typeof CardsCardNumberRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedCardsCardNumberRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/accounts/$iban': {
+      id: '/_authenticated/accounts/$iban'
+      path: '/accounts/$iban'
+      fullPath: '/accounts/$iban'
+      preLoaderRoute: typeof AuthenticatedAccountsIbanRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
   }
 }
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedAccountsIbanRoute: typeof AuthenticatedAccountsIbanRoute
+  AuthenticatedCardsCardNumberRoute: typeof AuthenticatedCardsCardNumberRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedAccountsIbanRoute: AuthenticatedAccountsIbanRoute,
+  AuthenticatedCardsCardNumberRoute: AuthenticatedCardsCardNumberRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AccountsIbanRoute: AccountsIbanRoute,
-  CardsCardNumberRoute: CardsCardNumberRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
