@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { transfersApi } from "../../apis";
 import { toast } from "sonner";
 import { BeneficiarySelect } from "./BeneficiarySelect";
@@ -23,6 +24,8 @@ interface Props {
   accountCurrency: string;
 }
 
+type Direction = "to" | "from";
+
 export function TransferFormDialog({
   open,
   onOpenChange,
@@ -32,7 +35,8 @@ export function TransferFormDialog({
 }: Props) {
   const { t } = useTranslation();
   const qc = useQueryClient();
-  const [destinationIban, setDestinationIban] = useState("");
+  const [direction, setDirection] = useState<Direction>("to");
+  const [beneficiaryIban, setBeneficiaryIban] = useState("");
   const [label, setLabel] = useState("");
   const [amount, setAmount] = useState(0);
   const [currency, setCurrency] = useState(accountCurrency);
@@ -41,8 +45,8 @@ export function TransferFormDialog({
     mutationFn: () =>
       transfersApi.transferMoneyBetweenAccounts({
         moneyTransferRequest: {
-          sourceIban,
-          destinationIban,
+          sourceIban: direction === "to" ? sourceIban : beneficiaryIban,
+          destinationIban: direction === "to" ? beneficiaryIban : sourceIban,
           amount,
           currency,
           label,
@@ -53,10 +57,11 @@ export function TransferFormDialog({
       qc.invalidateQueries({ queryKey: ["transfers-in", sourceIban] });
       qc.invalidateQueries({ queryKey: ["account", sourceIban] });
       onOpenChange(false);
-      setDestinationIban("");
+      setBeneficiaryIban("");
       setLabel("");
       setAmount(0);
       setCurrency(accountCurrency);
+      setDirection("to");
     },
     onError: () => toast.error(t("errors.actionFailed")),
   });
@@ -74,13 +79,32 @@ export function TransferFormDialog({
             mutation.mutate();
           }}
         >
-          <BeneficiarySelect
-            id="transfer-ben"
-            customerId={customerId}
-            value={destinationIban}
-            onChange={setDestinationIban}
-            enabled={open}
-          />
+          <div className="flex items-end gap-3">
+            <div className="flex-1">
+              <BeneficiarySelect
+                id="transfer-ben"
+                customerId={customerId}
+                value={beneficiaryIban}
+                onChange={setBeneficiaryIban}
+                enabled={open}
+                label={
+                  direction === "to"
+                    ? t("payment.destination")
+                    : t("transfer.source")
+                }
+              />
+            </div>
+            <ToggleGroup
+              type="single"
+              value={direction}
+              onValueChange={(v) => v && setDirection(v as Direction)}
+              variant="outline"
+              size="sm"
+            >
+              <ToggleGroupItem value="to">{t("transfer.directionTo")}</ToggleGroupItem>
+              <ToggleGroupItem value="from">{t("transfer.directionFrom")}</ToggleGroupItem>
+            </ToggleGroup>
+          </div>
           <div className="grid gap-1.5">
             <Label htmlFor="transfer-label">{t("transfer.labelField")}</Label>
             <Input
@@ -121,7 +145,7 @@ export function TransferFormDialog({
               type="submit"
               disabled={
                 mutation.isPending ||
-                !destinationIban ||
+                !beneficiaryIban ||
                 !label ||
                 amount <= 0 ||
                 currency.length !== 3

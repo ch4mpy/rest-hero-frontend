@@ -74,7 +74,9 @@
     "reset": "Reset",
     "noResults": "No movements.",
     "createTitle": "New wire transfer",
-    "create": "+ Wire transfer"
+    "create": "+ Wire transfer",
+    "directionTo": "To",
+    "directionFrom": "From"
   },
   "payment": {
     "createTitle": "New payment",
