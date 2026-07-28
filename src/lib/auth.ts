@@ -60,9 +60,9 @@ export async function startLogin(): Promise<void> {
  */
 export async function logout(): Promise<void> {
   try {
-    await gatewayApi.logoutRaw();
+    const response = await gatewayApi.logoutRaw();
+    window.location.assign(response?.raw?.headers?.get("Location") ?? homeUrl());
   } catch (e) {
     if (!(e instanceof ResponseError)) throw e;
   }
-  window.location.assign(homeUrl());
 }
