@@ -16,6 +16,7 @@ import { transfersApi } from "../../apis";
 import { toast } from "sonner";
 import { BeneficiarySelect } from "./BeneficiarySelect";
 import { CurrencySelect } from "./CurrencySelect";
+import { useCurrencies } from "@/lib/currencies";
 
 interface Props {
   open: boolean;
@@ -35,6 +36,7 @@ export function TransferFormDialog({
   accountCurrency,
 }: Props) {
   const { t } = useTranslation();
+  const { decimalsOf, format } = useCurrencies();
   const qc = useQueryClient();
   const [direction, setDirection] = useState<Direction>("to");
   const [beneficiaryIban, setBeneficiaryIban] = useState("");
