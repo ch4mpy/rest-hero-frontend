@@ -40,7 +40,7 @@ export const Route = createFileRoute("/_authenticated/accounts/$iban")({
 interface Filters {
   minAmount?: number;
   maxAmount?: number;
-  currencyIso3?: string;
+  currency?: string;
   labelContaining?: string;
   page: number;
   size: number;
@@ -209,11 +209,11 @@ function AccountDetails() {
               id="movements-currency"
               label={t("transfer.currency")}
               allowAny
-              value={filters.currencyIso3 ?? ""}
+              value={filters.currency ?? ""}
               onChange={(v) =>
                 setFilters((f) => ({
                   ...f,
-                  currencyIso3: v === ANY_CURRENCY ? undefined : v,
+                  currency: v === ANY_CURRENCY ? undefined : v,
                 }))
               }
             />
