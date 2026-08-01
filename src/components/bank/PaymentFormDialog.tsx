@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { cardApi } from "../../apis";
 import { toast } from "sonner";
 import { BeneficiarySelect } from "./BeneficiarySelect";
+import { useCurrencies } from "@/lib/currencies";
 
 interface Props {
   open: boolean;
