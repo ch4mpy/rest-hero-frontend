@@ -24,6 +24,7 @@ interface Props {
 }
 export function PaymentFormDialog({ open, onOpenChange, cardNumber, customerId, currency }: Props) {
   const { t } = useTranslation();
+  const { decimalsOf, format } = useCurrencies();
   const qc = useQueryClient();
   const [destinationIban, setDestinationIban] = useState("");
   const [amount, setAmount] = useState(0);
