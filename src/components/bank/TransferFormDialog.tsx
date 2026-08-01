@@ -117,7 +117,10 @@ export function TransferFormDialog({
           </div>
           <div className="grid grid-cols-3 gap-3">
             <div className="col-span-2 grid gap-1.5">
-              <Label htmlFor="transfer-amount">{t("transfer.amount")}</Label>
+              <Label htmlFor="transfer-amount">
+                {t("transfer.amount")}
+                {decimalsOf(currency) > 0 ? ` — ${t("amount.withDecimals")}` : ""}
+              </Label>
               <Input
                 id="transfer-amount"
                 type="number"
@@ -126,6 +129,7 @@ export function TransferFormDialog({
                 onChange={(e) => setAmount(Number(e.target.value))}
                 required
               />
+              <p className="text-sm text-muted-foreground">{format(amount, currency)}</p>
             </div>
             <CurrencySelect
               id="transfer-currency"
