@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { cardApi } from "../../apis";
 import { toast } from "sonner";
 import { BeneficiarySelect } from "./BeneficiarySelect";
+import { useCurrencies } from "@/lib/currencies";
 
 interface Props {
   open: boolean;
@@ -24,6 +25,7 @@ interface Props {
 }
 export function PaymentFormDialog({ open, onOpenChange, cardNumber, customerId, currency }: Props) {
   const { t } = useTranslation();
+  const { decimalsOf, format } = useCurrencies();
   const qc = useQueryClient();
   const [destinationIban, setDestinationIban] = useState("");
   const [amount, setAmount] = useState(0);
@@ -71,6 +73,7 @@ export function PaymentFormDialog({ open, onOpenChange, cardNumber, customerId, 
           <div className="grid gap-1.5">
             <Label htmlFor="pay-amount">
               {t("payment.amount")} ({currency})
+              {decimalsOf(currency) > 0 ? ` — ${t("amount.withDecimals")}` : ""}
             </Label>
             <Input
               id="pay-amount"
@@ -80,6 +83,7 @@ export function PaymentFormDialog({ open, onOpenChange, cardNumber, customerId, 
               onChange={(e) => setAmount(Number(e.target.value))}
               required
             />
+            <p className="text-sm text-muted-foreground">{format(amount, currency)}</p>
           </div>
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
