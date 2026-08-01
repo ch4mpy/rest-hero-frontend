@@ -71,6 +71,7 @@ export function PaymentFormDialog({ open, onOpenChange, cardNumber, customerId, 
           <div className="grid gap-1.5">
             <Label htmlFor="pay-amount">
               {t("payment.amount")} ({currency})
+              {decimalsOf(currency) > 0 ? ` — ${t("amount.withDecimals")}` : ""}
             </Label>
             <Input
               id="pay-amount"
@@ -80,6 +81,7 @@ export function PaymentFormDialog({ open, onOpenChange, cardNumber, customerId, 
               onChange={(e) => setAmount(Number(e.target.value))}
               required
             />
+            <p className="text-sm text-muted-foreground">{format(amount, currency)}</p>
           </div>
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
