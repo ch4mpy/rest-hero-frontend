@@ -1,13 +1,22 @@
-// Amounts are stored as smallest currency unit (integer cents).
-export function formatAmount(amount: number, currency: string, locale = "fr-FR"): string {
+// Amounts are stored as smallest currency unit (e.g. cents).
+// `decimals` comes from the currency service (number of decimals of the currency).
+export function formatAmount(
+  amount: number,
+  currency: string,
+  decimals = 2,
+  locale = "fr-FR",
+): string {
+  const value = amount / Math.pow(10, decimals);
   try {
     return new Intl.NumberFormat(locale, {
       style: "currency",
       currency,
       currencyDisplay: "code",
-    }).format(amount / 100);
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    }).format(value);
   } catch {
-    return `${(amount / 100).toFixed(2)} ${currency}`;
+    return `${value.toFixed(decimals)} ${currency}`;
   }
 }
 

@@ -15,6 +15,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { transfersApi } from "../../apis";
 import { toast } from "sonner";
 import { BeneficiarySelect } from "./BeneficiarySelect";
+import { CurrencySelect } from "./CurrencySelect";
 
 interface Props {
   open: boolean;
@@ -126,16 +127,12 @@ export function TransferFormDialog({
                 required
               />
             </div>
-            <div className="grid gap-1.5">
-              <Label htmlFor="transfer-currency">{t("transfer.currency")}</Label>
-              <Input
-                id="transfer-currency"
-                maxLength={3}
-                value={currency}
-                onChange={(e) => setCurrency(e.target.value.toUpperCase())}
-                required
-              />
-            </div>
+            <CurrencySelect
+              id="transfer-currency"
+              label={t("transfer.currency")}
+              value={currency}
+              onChange={setCurrency}
+            />
           </div>
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>

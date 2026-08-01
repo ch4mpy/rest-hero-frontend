@@ -15,7 +15,8 @@ import {
 } from "@/components/ui/table";
 import { ArrowLeft, Pencil, CreditCard } from "lucide-react";
 import { accountApi, cardApi } from "../apis";
-import { formatAmount, formatDate, maskCardNumber } from "@/lib/format";
+import { formatDate, maskCardNumber } from "@/lib/format";
+import { useCurrencies } from "@/lib/currencies";
 import { hasAuthority, useMe } from "@/lib/auth";
 import { CardCeilingsDialog } from "@/components/bank/CardCeilingsDialog";
 import { PaymentFormDialog } from "@/components/bank/PaymentFormDialog";
@@ -38,6 +39,7 @@ export const Route = createFileRoute("/_authenticated/cards/$cardNumber")({
 function CardDetails() {
   const { cardNumber } = Route.useParams();
   const { t } = useTranslation();
+  const { format: formatAmount } = useCurrencies();
   const qc = useQueryClient();
   const { data: me } = useMe();
   const canEditCeilings = hasAuthority(me, "card.ceilings_edit");

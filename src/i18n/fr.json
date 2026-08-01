@@ -76,7 +76,8 @@
     "createTitle": "Nouveau virement",
     "create": "+ Virement",
     "directionTo": "Vers",
-    "directionFrom": "Depuis"
+    "directionFrom": "Depuis",
+    "anyCurrency": "Toutes"
   },
   "payment": {
     "createTitle": "Nouveau paiement",

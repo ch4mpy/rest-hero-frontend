@@ -74,7 +74,7 @@ export const transfersApi = new MoneyTransfersApi(accountServiceConfig);
 
 export const cardApi = new CardsApi(cardServiceConfig);
 
-export const currencyApi = new CurrenciesApi(customerServiceConfig);
+export const currencyApi = new CurrenciesApi(currencyServiceConfig);
 
 export const customerApi = new CustomersApi(customerServiceConfig);
 

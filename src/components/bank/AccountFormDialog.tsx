@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { accountApi } from "../../apis";
+import { CurrencySelect } from "./CurrencySelect";
 
 interface Props {
   open: boolean;
@@ -54,16 +55,12 @@ export function AccountFormDialog({ open, onOpenChange, customerId }: Props) {
             <Label htmlFor="iban">{t("account.iban")}</Label>
             <Input id="iban" value={iban} onChange={(e) => setIban(e.target.value)} required />
           </div>
-          <div className="grid gap-1.5">
-            <Label htmlFor="currency">{t("account.currency")}</Label>
-            <Input
-              id="currency"
-              maxLength={3}
-              value={currency}
-              onChange={(e) => setCurrency(e.target.value.toUpperCase())}
-              required
-            />
-          </div>
+          <CurrencySelect
+            id="currency"
+            label={t("account.currency")}
+            value={currency}
+            onChange={setCurrency}
+          />
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
               {t("actions.cancel")}

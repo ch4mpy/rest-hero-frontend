@@ -16,7 +16,9 @@ import {
 } from "@/components/ui/table";
 import { Plus, ChevronRight, ArrowLeft } from "lucide-react";
 import { accountApi, cardApi, transfersApi } from "../apis";
-import { formatAmount, formatDate, maskCardNumber } from "@/lib/format";
+import { formatDate, maskCardNumber } from "@/lib/format";
+import { useCurrencies } from "@/lib/currencies";
+import { CurrencySelect, ANY_CURRENCY } from "@/components/bank/CurrencySelect";
 import { hasAuthority, useMe } from "@/lib/auth";
 import { CardFormDialog } from "@/components/bank/CardFormDialog";
 import { PeriodFilter, usePeriodFilter } from "@/components/bank/PeriodFilter";
@@ -53,6 +55,7 @@ function AccountDetails() {
   const [transferDialogOpen, setTransferDialogOpen] = useState(false);
   const [filters, setFilters] = useState<Filters>({ page: 0, size: 10 });
   const period = usePeriodFilter();
+  const { format: formatAmount } = useCurrencies();
   const { fromDate, toDate, rangeValid } = period;
 
   const { data: account } = useQuery({
@@ -202,18 +205,18 @@ function AccountDetails() {
                 }
               />
             </Field>
-            <Field label={t("transfer.currency")}>
-              <Input
-                maxLength={3}
-                value={filters.currencyIso3 ?? ""}
-                onChange={(e) =>
-                  setFilters((f) => ({
-                    ...f,
-                    currencyIso3: e.target.value ? e.target.value.toUpperCase() : undefined,
-                  }))
-                }
-              />
-            </Field>
+            <CurrencySelect
+              id="movements-currency"
+              label={t("transfer.currency")}
+              allowAny
+              value={filters.currencyIso3 ?? ""}
+              onChange={(v) =>
+                setFilters((f) => ({
+                  ...f,
+                  currencyIso3: v === ANY_CURRENCY ? undefined : v,
+                }))
+              }
+            />
             <Field label={t("transfer.label")}>
               <Input
                 minLength={3}
