@@ -76,7 +76,8 @@
     "createTitle": "New wire transfer",
     "create": "+ Wire transfer",
     "directionTo": "To",
-    "directionFrom": "From"
+    "directionFrom": "From",
+    "anyCurrency": "Any"
   },
   "payment": {
     "createTitle": "New payment",

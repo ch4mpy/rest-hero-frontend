@@ -39,6 +39,7 @@ export const Route = createFileRoute("/_authenticated/cards/$cardNumber")({
 function CardDetails() {
   const { cardNumber } = Route.useParams();
   const { t } = useTranslation();
+  const { format: formatAmount } = useCurrencies();
   const qc = useQueryClient();
   const { data: me } = useMe();
   const canEditCeilings = hasAuthority(me, "card.ceilings_edit");

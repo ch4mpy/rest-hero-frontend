@@ -155,6 +155,7 @@ function AccountsCard({
   onAdd: () => void;
 }) {
   const { t } = useTranslation();
+  const { format: formatAmount } = useCurrencies();
   const { data } = useQuery({
     queryKey: ["accounts", customerId],
     queryFn: () => accountApi.listAccounts({ customerId }),
