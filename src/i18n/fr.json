@@ -113,5 +113,8 @@
     "previous": "Précédent",
     "next": "Suivant",
     "page": "Page"
+  },
+  "amount": {
+    "withDecimals": "avec décimales"
   }
 }
