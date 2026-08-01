@@ -24,43 +24,49 @@ export interface MoneyTransferResponse {
      * @type {string}
      * @memberof MoneyTransferResponse
      */
-    sourceIban?: string;
+    sourceIban: string;
     /**
      * 
      * @type {string}
      * @memberof MoneyTransferResponse
      */
-    destinationIban?: string;
+    destinationIban: string;
     /**
      * In minor unit (i.e. 1000 for 1000 XPF, 10.00 USD, 1.000 KWD)
      * @type {number}
      * @memberof MoneyTransferResponse
      */
-    amount?: number;
+    amount: number;
     /**
      * in ISO_3 format
      * @type {string}
      * @memberof MoneyTransferResponse
      */
-    currency?: string;
+    currency: string;
     /**
      * 
      * @type {Date}
      * @memberof MoneyTransferResponse
      */
-    timestamp?: Date;
+    timestamp: Date;
     /**
      * 
      * @type {string}
      * @memberof MoneyTransferResponse
      */
-    label?: string;
+    label: string;
 }
 
 /**
  * Check if a given object implements the MoneyTransferResponse interface.
  */
 export function instanceOfMoneyTransferResponse(value: object): value is MoneyTransferResponse {
+    if (!('sourceIban' in value) || value['sourceIban'] === undefined) return false;
+    if (!('destinationIban' in value) || value['destinationIban'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('currency' in value) || value['currency'] === undefined) return false;
+    if (!('timestamp' in value) || value['timestamp'] === undefined) return false;
+    if (!('label' in value) || value['label'] === undefined) return false;
     return true;
 }
 
@@ -74,12 +80,12 @@ export function MoneyTransferResponseFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'sourceIban': json['sourceIban'] == null ? undefined : json['sourceIban'],
-        'destinationIban': json['destinationIban'] == null ? undefined : json['destinationIban'],
-        'amount': json['amount'] == null ? undefined : json['amount'],
-        'currency': json['currency'] == null ? undefined : json['currency'],
-        'timestamp': json['timestamp'] == null ? undefined : (new Date(json['timestamp'])),
-        'label': json['label'] == null ? undefined : json['label'],
+        'sourceIban': json['sourceIban'],
+        'destinationIban': json['destinationIban'],
+        'amount': json['amount'],
+        'currency': json['currency'],
+        'timestamp': (new Date(json['timestamp'])),
+        'label': json['label'],
     };
 }
 
@@ -98,7 +104,7 @@ export function MoneyTransferResponseToJSONTyped(value?: MoneyTransferResponse |
         'destinationIban': value['destinationIban'],
         'amount': value['amount'],
         'currency': value['currency'],
-        'timestamp': value['timestamp'] == null ? value['timestamp'] : value['timestamp'].toISOString(),
+        'timestamp': value['timestamp'].toISOString(),
         'label': value['label'],
     };
 }

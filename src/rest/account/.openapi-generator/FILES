@@ -1,3 +1,4 @@
+.openapi-generator-ignore
 apis/AccountsApi.ts
 apis/MoneyTransfersApi.ts
 apis/index.ts

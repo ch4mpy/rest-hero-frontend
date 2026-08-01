@@ -24,7 +24,7 @@ export interface CardPaymentCreationRequest {
      * @type {string}
      * @memberof CardPaymentCreationRequest
      */
-    currency?: string;
+    currency: string;
     /**
      * 
      * @type {number}
@@ -49,6 +49,7 @@ export interface CardPaymentCreationRequest {
  * Check if a given object implements the CardPaymentCreationRequest interface.
  */
 export function instanceOfCardPaymentCreationRequest(value: object): value is CardPaymentCreationRequest {
+    if (!('currency' in value) || value['currency'] === undefined) return false;
     if (!('amount' in value) || value['amount'] === undefined) return false;
     if (!('destinationIban' in value) || value['destinationIban'] === undefined) return false;
     return true;
@@ -64,7 +65,7 @@ export function CardPaymentCreationRequestFromJSONTyped(json: any, ignoreDiscrim
     }
     return {
         
-        'currency': json['currency'] == null ? undefined : json['currency'],
+        'currency': json['currency'],
         'amount': json['amount'],
         'cardNumber': json['cardNumber'] == null ? undefined : json['cardNumber'],
         'destinationIban': json['destinationIban'],

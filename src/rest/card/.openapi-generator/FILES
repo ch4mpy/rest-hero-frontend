@@ -1,3 +1,4 @@
+.openapi-generator-ignore
 apis/CardsApi.ts
 apis/index.ts
 docs/CardCeilingsRequest.md

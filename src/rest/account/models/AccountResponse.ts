@@ -24,31 +24,35 @@ export interface AccountResponse {
      * @type {string}
      * @memberof AccountResponse
      */
-    iban?: string;
+    iban: string;
     /**
      * 
      * @type {string}
      * @memberof AccountResponse
      */
-    customerId?: string;
+    customerId: string;
     /**
      * 
      * @type {string}
      * @memberof AccountResponse
      */
-    currency?: string;
+    currency: string;
     /**
      * 
      * @type {number}
      * @memberof AccountResponse
      */
-    balance?: number;
+    balance: number;
 }
 
 /**
  * Check if a given object implements the AccountResponse interface.
  */
 export function instanceOfAccountResponse(value: object): value is AccountResponse {
+    if (!('iban' in value) || value['iban'] === undefined) return false;
+    if (!('customerId' in value) || value['customerId'] === undefined) return false;
+    if (!('currency' in value) || value['currency'] === undefined) return false;
+    if (!('balance' in value) || value['balance'] === undefined) return false;
     return true;
 }
 
@@ -62,10 +66,10 @@ export function AccountResponseFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
-        'iban': json['iban'] == null ? undefined : json['iban'],
-        'customerId': json['customerId'] == null ? undefined : json['customerId'],
-        'currency': json['currency'] == null ? undefined : json['currency'],
-        'balance': json['balance'] == null ? undefined : json['balance'],
+        'iban': json['iban'],
+        'customerId': json['customerId'],
+        'currency': json['currency'],
+        'balance': json['balance'],
     };
 }
 

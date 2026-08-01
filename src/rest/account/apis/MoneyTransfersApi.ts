@@ -48,7 +48,7 @@ export interface ListMoneyTransfersRequest {
     destinationIban?: string;
     minAmount?: number;
     maxAmount?: number;
-    currencyIso3?: string;
+    currency?: string;
     timestampAfter?: Date;
     timestampBefore?: Date;
     labelContaining?: string;
@@ -135,8 +135,8 @@ export class MoneyTransfersApi extends runtime.BaseAPI {
             queryParameters['maxAmount'] = requestParameters['maxAmount'];
         }
 
-        if (requestParameters['currencyIso3'] != null) {
-            queryParameters['currencyIso3'] = requestParameters['currencyIso3'];
+        if (requestParameters['currency'] != null) {
+            queryParameters['currency'] = requestParameters['currency'];
         }
 
         if (requestParameters['timestampAfter'] != null) {
@@ -226,8 +226,8 @@ export class MoneyTransfersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Requires the `account.transfer` authority.    This labs implementation ignores other banks. If the source or destination account isn\'t  managed by this service (another bank?), the withdraw / credit is ignored and a transfer is  saved anyway.
-     * Requires the `account.transfer` authority.    This labs implementation ignores other banks. If the source or destination account isn\'t  managed by this service (another bank?), the withdraw / credit is ignored and a transfer is  saved anyway.
+     * Requires the `account.transfer` authority.   This labs implementation ignores other banks. If the source or destination account isn\'t  managed by this service (another bank?), the withdraw / credit is ignored and a transfer is  saved anyway.
+     * Requires the `account.transfer` authority.   This labs implementation ignores other banks. If the source or destination account isn\'t  managed by this service (another bank?), the withdraw / credit is ignored and a transfer is  saved anyway.
      */
     async transferMoneyBetweenAccountsRaw(requestParameters: TransferMoneyBetweenAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const requestOptions = await this.transferMoneyBetweenAccountsRequestOpts(requestParameters);
@@ -237,8 +237,8 @@ export class MoneyTransfersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Requires the `account.transfer` authority.    This labs implementation ignores other banks. If the source or destination account isn\'t  managed by this service (another bank?), the withdraw / credit is ignored and a transfer is  saved anyway.
-     * Requires the `account.transfer` authority.    This labs implementation ignores other banks. If the source or destination account isn\'t  managed by this service (another bank?), the withdraw / credit is ignored and a transfer is  saved anyway.
+     * Requires the `account.transfer` authority.   This labs implementation ignores other banks. If the source or destination account isn\'t  managed by this service (another bank?), the withdraw / credit is ignored and a transfer is  saved anyway.
+     * Requires the `account.transfer` authority.   This labs implementation ignores other banks. If the source or destination account isn\'t  managed by this service (another bank?), the withdraw / credit is ignored and a transfer is  saved anyway.
      */
     async transferMoneyBetweenAccounts(requestParameters: TransferMoneyBetweenAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.transferMoneyBetweenAccountsRaw(requestParameters, initOverrides);

@@ -1,0 +1,13 @@
+.openapi-generator-ignore
+apis/CurrenciesApi.ts
+apis/index.ts
+docs/CurrenciesApi.md
+docs/CurrencyResponse.md
+docs/ProblemDetail.md
+docs/ValidationProblemDetail.md
+index.ts
+models/CurrencyResponse.ts
+models/ProblemDetail.ts
+models/ValidationProblemDetail.ts
+models/index.ts
+runtime.ts

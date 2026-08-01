@@ -6,7 +6,7 @@ All URIs are relative to *https://localhost:8081*
 |------------- | ------------- | -------------|
 | [**getMoneyTransfer**](MoneyTransfersApi.md#getmoneytransfer) | **GET** /transfers/{transferId} | Requires the &#x60;account.read_any&#x60; authority or that the authenticated user is the owner of the  source or destination account. |
 | [**listMoneyTransfers**](MoneyTransfersApi.md#listmoneytransfers) | **GET** /transfers | Requires the &#x60;account.read_any&#x60; authority or that the authenticated user is the owner of the  source or destination account. |
-| [**transferMoneyBetweenAccounts**](MoneyTransfersApi.md#transfermoneybetweenaccounts) | **POST** /transfers | Requires the &#x60;account.transfer&#x60; authority.    This labs implementation ignores other banks. If the source or destination account isn\&#39;t  managed by this service (another bank?), the withdraw / credit is ignored and a transfer is  saved anyway. |
+| [**transferMoneyBetweenAccounts**](MoneyTransfersApi.md#transfermoneybetweenaccounts) | **POST** /transfers | Requires the &#x60;account.transfer&#x60; authority.   This labs implementation ignores other banks. If the source or destination account isn\&#39;t  managed by this service (another bank?), the withdraw / credit is ignored and a transfer is  saved anyway. |
 
 
 
@@ -83,7 +83,7 @@ No authorization required
 
 ## listMoneyTransfers
 
-> PagedModelMoneyTransferResponse listMoneyTransfers(sourceIban, destinationIban, minAmount, maxAmount, currencyIso3, timestampAfter, timestampBefore, labelContaining, page, size, sort)
+> PagedModelMoneyTransferResponse listMoneyTransfers(sourceIban, destinationIban, minAmount, maxAmount, currency, timestampAfter, timestampBefore, labelContaining, page, size, sort)
 
 Requires the &#x60;account.read_any&#x60; authority or that the authenticated user is the owner of the  source or destination account.
 
@@ -108,11 +108,11 @@ async function example() {
     // string | a valid IBAN for the destination account (optional) (optional)
     destinationIban: destinationIban_example,
     // number | the minimum amount of the transfer (optional) (optional)
-    minAmount: 789,
+    minAmount: 56,
     // number | the maximum amount of the transfer (optional) (optional)
-    maxAmount: 789,
+    maxAmount: 56,
     // string | a valid ISO 4217 currency code (optional) (optional)
-    currencyIso3: currencyIso3_example,
+    currency: currency_example,
     // Date | the earliest timestamp of the transfer (optional) (optional)
     timestampAfter: 2013-10-20T19:20:30+01:00,
     // Date | the latest timestamp of the transfer (optional) (optional)
@@ -148,7 +148,7 @@ example().catch(console.error);
 | **destinationIban** | `string` | a valid IBAN for the destination account (optional) | [Optional] [Defaults to `undefined`] |
 | **minAmount** | `number` | the minimum amount of the transfer (optional) | [Optional] [Defaults to `undefined`] |
 | **maxAmount** | `number` | the maximum amount of the transfer (optional) | [Optional] [Defaults to `undefined`] |
-| **currencyIso3** | `string` | a valid ISO 4217 currency code (optional) | [Optional] [Defaults to `undefined`] |
+| **currency** | `string` | a valid ISO 4217 currency code (optional) | [Optional] [Defaults to `undefined`] |
 | **timestampAfter** | `Date` | the earliest timestamp of the transfer (optional) | [Optional] [Defaults to `undefined`] |
 | **timestampBefore** | `Date` | the latest timestamp of the transfer (optional) | [Optional] [Defaults to `undefined`] |
 | **labelContaining** | `string` | a substring of at least 3 characters that should be contained in the         transfer label (optional) | [Optional] [Defaults to `undefined`] |
@@ -186,9 +186,9 @@ No authorization required
 
 > transferMoneyBetweenAccounts(moneyTransferRequest)
 
-Requires the &#x60;account.transfer&#x60; authority.    This labs implementation ignores other banks. If the source or destination account isn\&#39;t  managed by this service (another bank?), the withdraw / credit is ignored and a transfer is  saved anyway.
+Requires the &#x60;account.transfer&#x60; authority.   This labs implementation ignores other banks. If the source or destination account isn\&#39;t  managed by this service (another bank?), the withdraw / credit is ignored and a transfer is  saved anyway.
 
-Requires the &#x60;account.transfer&#x60; authority.    This labs implementation ignores other banks. If the source or destination account isn\&#39;t  managed by this service (another bank?), the withdraw / credit is ignored and a transfer is  saved anyway.
+Requires the &#x60;account.transfer&#x60; authority.   This labs implementation ignores other banks. If the source or destination account isn\&#39;t  managed by this service (another bank?), the withdraw / credit is ignored and a transfer is  saved anyway.
 
 ### Example
 

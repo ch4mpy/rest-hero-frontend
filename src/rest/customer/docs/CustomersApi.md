@@ -80,10 +80,10 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
 | **500** | Internal Server Error |  -  |
-| **404** | Not Found |  -  |
 | **200** | a response with a Location header pointing to the created beneficiary |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -151,10 +151,10 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
 | **500** | Internal Server Error |  -  |
-| **404** | Not Found |  -  |
 | **200** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -223,10 +223,10 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
 | **500** | Internal Server Error |  -  |
-| **404** | Not Found |  -  |
 | **202** | Accepted |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -295,10 +295,10 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
 | **500** | Internal Server Error |  -  |
-| **404** | Not Found |  -  |
 | **200** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -366,10 +366,10 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
 | **500** | Internal Server Error |  -  |
-| **404** | Not Found |  -  |
 | **200** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -437,10 +437,10 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
 | **500** | Internal Server Error |  -  |
-| **404** | Not Found |  -  |
 | **200** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -517,10 +517,10 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
 | **500** | Internal Server Error |  -  |
-| **404** | Not Found |  -  |
 | **200** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -592,10 +592,10 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
 | **500** | Internal Server Error |  -  |
-| **404** | Not Found |  -  |
 | **202** | Accepted |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
