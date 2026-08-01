@@ -15,7 +15,8 @@ import {
 } from "@/components/ui/table";
 import { ArrowLeft, Pencil, CreditCard } from "lucide-react";
 import { accountApi, cardApi } from "../apis";
-import { formatAmount, formatDate, maskCardNumber } from "@/lib/format";
+import { formatDate, maskCardNumber } from "@/lib/format";
+import { useCurrencies } from "@/lib/currencies";
 import { hasAuthority, useMe } from "@/lib/auth";
 import { CardCeilingsDialog } from "@/components/bank/CardCeilingsDialog";
 import { PaymentFormDialog } from "@/components/bank/PaymentFormDialog";

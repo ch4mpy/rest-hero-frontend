@@ -12,7 +12,7 @@ import { CustomerSelector } from "@/components/bank/CustomerSelector";
 import { CustomerFormDialog } from "@/components/bank/CustomerFormDialog";
 import { AccountFormDialog } from "@/components/bank/AccountFormDialog";
 import { BeneficiariesList } from "@/components/bank/BeneficiariesList";
-import { formatAmount } from "@/lib/format";
+import { useCurrencies } from "@/lib/currencies";
 
 export const Route = createFileRoute("/")({
   head: () => ({
