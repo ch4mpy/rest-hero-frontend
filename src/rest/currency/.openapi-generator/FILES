@@ -1,4 +1,3 @@
-.openapi-generator-ignore
 apis/CurrenciesApi.ts
 apis/index.ts
 docs/CurrenciesApi.md

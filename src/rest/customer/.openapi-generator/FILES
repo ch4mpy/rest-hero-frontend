@@ -1,4 +1,3 @@
-.openapi-generator-ignore
 apis/CustomersApi.ts
 apis/index.ts
 docs/BeneficiaryRequest.md

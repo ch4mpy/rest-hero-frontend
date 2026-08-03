@@ -75,9 +75,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
+| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **200** | the amount in the target currency\&#39;s smallest unit |  -  |
 
@@ -136,9 +136,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
+| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **200** | OK |  -  |
 

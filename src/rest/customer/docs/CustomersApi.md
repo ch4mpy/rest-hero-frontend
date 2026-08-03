@@ -80,9 +80,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
+| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **200** | a response with a Location header pointing to the created beneficiary |  -  |
 
@@ -151,9 +151,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
+| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **200** | OK |  -  |
 
@@ -223,9 +223,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
+| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **202** | Accepted |  -  |
 
@@ -295,9 +295,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
+| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **200** | OK |  -  |
 
@@ -366,9 +366,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
+| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **200** | OK |  -  |
 
@@ -437,9 +437,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
+| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **200** | OK |  -  |
 
@@ -517,9 +517,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
+| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **200** | OK |  -  |
 
@@ -592,9 +592,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
+| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **202** | Accepted |  -  |
 

@@ -72,9 +72,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
+| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **200** | a 201 Created response with the Location header set to the newly created account\&#39;s URL. |  -  |
 
@@ -143,9 +143,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
+| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **200** | the account with the given IBAN. |  -  |
 
@@ -214,9 +214,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
+| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **200** | all accounts with the given customer ID. |  -  |
 
