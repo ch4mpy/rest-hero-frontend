@@ -76,9 +76,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
-| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **200** | a response with a &#x60;Location&#x60; header pointing to the newly created card resource |  -  |
 
@@ -150,9 +150,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
-| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **200** | OK |  -  |
 
@@ -221,9 +221,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
-| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **200** | OK |  -  |
 
@@ -298,9 +298,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
-| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **200** | OK |  -  |
 
@@ -369,9 +369,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
-| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **200** | OK |  -  |
 
@@ -443,9 +443,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
-| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **202** | Accepted |  -  |
 
@@ -517,9 +517,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
-| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **202** | Accepted |  -  |
 

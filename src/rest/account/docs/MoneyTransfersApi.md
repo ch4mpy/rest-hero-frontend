@@ -72,9 +72,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
-| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **200** | the money transfer with the given ID |  -  |
 
@@ -173,9 +173,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
-| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **200** | a paginated list of money transfers matching the filter criteria |  -  |
 
@@ -244,9 +244,9 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **404** | Not Found |  -  |
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
-| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
 | **200** | A response with a Location header pointing to the created transfer resource |  -  |
 

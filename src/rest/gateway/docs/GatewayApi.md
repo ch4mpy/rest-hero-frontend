@@ -66,8 +66,8 @@ No authorization required
 |-------------|-------------|------------------|
 | **422** | Unprocessable Content |  -  |
 | **409** | Conflict |  -  |
-| **404** | Not Found |  -  |
 | **500** | Internal Server Error |  -  |
+| **404** | Not Found |  -  |
 | **200** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
