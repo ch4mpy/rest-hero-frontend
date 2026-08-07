@@ -14,6 +14,11 @@
 
 import * as runtime from '../runtime';
 import {
+    type DomainEvent,
+    DomainEventFromJSON,
+    DomainEventToJSON,
+} from '../models/DomainEvent';
+import {
     type ProblemDetail,
     ProblemDetailFromJSON,
     ProblemDetailToJSON,
@@ -143,6 +148,49 @@ export class GatewayApi extends runtime.BaseAPI {
      */
     async startLoginWithGateway(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.startLoginWithGatewayRaw(initOverrides);
+    }
+
+    /**
+     * Creates request options for subscribeToServerStateChangedEvents without sending the request
+     */
+    async subscribeToServerStateChangedEventsRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/bff/events`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Subscribes the current user to the notification stream: a {@link DomainEvent DomainEvent} is pushed  whenever something relevant to them happens on a business service. The frontend is expected  to refetch the actual resource over REST once notified.
+     * Subscribes the current user to the notification stream: a {@link DomainEvent DomainEvent} is pushed  whenever something relevant to them happens on a business service.
+     */
+    async subscribeToServerStateChangedEventsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainEvent>> {
+        const requestOptions = await this.subscribeToServerStateChangedEventsRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<DomainEvent>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Subscribes the current user to the notification stream: a {@link DomainEvent DomainEvent} is pushed  whenever something relevant to them happens on a business service. The frontend is expected  to refetch the actual resource over REST once notified.
+     * Subscribes the current user to the notification stream: a {@link DomainEvent DomainEvent} is pushed  whenever something relevant to them happens on a business service.
+     */
+    async subscribeToServerStateChangedEvents(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainEvent> {
+        const response = await this.subscribeToServerStateChangedEventsRaw(initOverrides);
+        return await response.value();
     }
 
 }

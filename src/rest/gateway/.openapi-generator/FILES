@@ -1,10 +1,12 @@
 apis/GatewayApi.ts
 apis/index.ts
+docs/DomainEvent.md
 docs/GatewayApi.md
 docs/ProblemDetail.md
 docs/UserResponse.md
 docs/ValidationProblemDetail.md
 index.ts
+models/DomainEvent.ts
 models/ProblemDetail.ts
 models/UserResponse.ts
 models/ValidationProblemDetail.ts

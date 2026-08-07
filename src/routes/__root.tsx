@@ -10,6 +10,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { useDomainEventsSubscription } from "../lib/notifications";
 import { AppHeader } from "@/components/bank/AppHeader";
 import { Toaster } from "@/components/ui/sonner";
 import "@/i18n";
@@ -100,6 +101,11 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function DomainEventsSubscription() {
+  useDomainEventsSubscription();
+  return null;
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
@@ -109,6 +115,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <DomainEventsSubscription />
       <div className="flex min-h-screen flex-col bg-background">
         <AppHeader />
         <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-8">
