@@ -18,6 +18,7 @@ import { accountApi, cardApi } from "../apis";
 import { formatDate, maskCardNumber } from "@/lib/format";
 import { useCurrencies } from "@/lib/currencies";
 import { hasAuthority, useMe } from "@/lib/auth";
+import { accountQueryKeys, cardQueryKeys } from "@/lib/resourceEvents";
 import { CardCeilingsDialog } from "@/components/bank/CardCeilingsDialog";
 import { PaymentFormDialog } from "@/components/bank/PaymentFormDialog";
 import { PeriodFilter, usePeriodFilter } from "@/components/bank/PeriodFilter";
@@ -51,18 +52,18 @@ function CardDetails() {
   const { from, to, rangeValid, fromDate, toDate } = period;
 
   const { data: card } = useQuery({
-    queryKey: ["card", cardNumber],
+    queryKey: cardQueryKeys.card(cardNumber),
     queryFn: () => cardApi.getCard({ cardNumber }),
   });
 
   const { data: account } = useQuery({
-    queryKey: ["account", card?.iban],
+    queryKey: accountQueryKeys.account(card?.iban),
     queryFn: () => accountApi.getAccount({ iban: card!.iban }),
     enabled: !!card?.iban,
   });
 
   const { data: payments } = useQuery({
-    queryKey: ["payments", cardNumber, from, to],
+    queryKey: [...cardQueryKeys.payments(cardNumber), from, to],
     queryFn: () =>
       cardApi.listCardPayments({
         cardNumber,
@@ -78,7 +79,7 @@ function CardDetails() {
   const statusMutation = useMutation({
     mutationFn: (isActive: boolean) =>
       cardApi.setCardStatus({ cardNumber, cardStatusRequest: { isActive } }),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["card", cardNumber] }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: cardQueryKeys.card(cardNumber) }),
     onError: () => toast.error(t("errors.actionFailed")),
   });
 

@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { customerApi } from "../../apis";
+import { beneficiaryQueryKeys } from "@/lib/resourceEvents";
 
 interface Props {
   id?: string;
@@ -29,7 +30,7 @@ export function BeneficiarySelect({
 }: Props) {
   const { t } = useTranslation();
   const { data: beneficiaries } = useQuery({
-    queryKey: ["beneficiaries", customerId],
+    queryKey: beneficiaryQueryKeys.beneficiaries(customerId),
     queryFn: () => customerApi.listBeneficiaries({ customerId }),
     enabled,
   });

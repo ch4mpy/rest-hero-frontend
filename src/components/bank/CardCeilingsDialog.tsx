@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { cardApi } from "../../apis";
 import type { CardResponse } from "@/rest/card";
+import { cardQueryKeys } from "@/lib/resourceEvents";
 import { toast } from "sonner";
 
 interface Props {
@@ -43,7 +44,7 @@ export function CardCeilingsDialog({ open, onOpenChange, card }: Props) {
         },
       }),
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["card", card.number] });
+      qc.invalidateQueries({ queryKey: cardQueryKeys.card(card.number) });
       onOpenChange(false);
     },
     onError: () => toast.error(t("errors.actionFailed")),

@@ -20,6 +20,7 @@ import { formatDate, maskCardNumber } from "@/lib/format";
 import { useCurrencies } from "@/lib/currencies";
 import { CurrencySelect, ANY_CURRENCY } from "@/components/bank/CurrencySelect";
 import { hasAuthority, useMe } from "@/lib/auth";
+import { accountQueryKeys, cardQueryKeys } from "@/lib/resourceEvents";
 import { CardFormDialog } from "@/components/bank/CardFormDialog";
 import { PeriodFilter, usePeriodFilter } from "@/components/bank/PeriodFilter";
 import { TransferFormDialog } from "@/components/bank/TransferFormDialog";
@@ -59,15 +60,15 @@ function AccountDetails() {
   const { fromDate, toDate, rangeValid } = period;
 
   const { data: account } = useQuery({
-    queryKey: ["account", iban],
+    queryKey: accountQueryKeys.account(iban),
     queryFn: () => accountApi.getAccount({ iban }),
   });
   const { data: cards } = useQuery({
-    queryKey: ["cards", iban],
+    queryKey: cardQueryKeys.cards(iban),
     queryFn: () => cardApi.listCards({ iban }),
   });
   const { data: transfers } = useQuery({
-    queryKey: ["transfers", iban, filters, period.from, period.to],
+    queryKey: [...accountQueryKeys.transfersOut(iban), filters, period.from, period.to],
     queryFn: () =>
       transfersApi.listMoneyTransfers({
         sourceIban: iban,
@@ -78,7 +79,7 @@ function AccountDetails() {
     enabled: rangeValid,
   });
   const { data: transfersIn } = useQuery({
-    queryKey: ["transfers-in", iban, filters, period.from, period.to],
+    queryKey: [...accountQueryKeys.transfersIn(iban), filters, period.from, period.to],
     queryFn: () =>
       transfersApi.listMoneyTransfers({
         destinationIban: iban,

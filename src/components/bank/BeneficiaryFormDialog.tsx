@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { customerApi } from "../../apis";
 import type { BeneficiaryResponse } from "@/rest/customer";
+import { beneficiaryQueryKeys } from "@/lib/resourceEvents";
 import { toast } from "sonner";
 
 interface Props {
@@ -44,7 +45,7 @@ export function BeneficiaryFormDialog({ open, onOpenChange, customerId, benefici
           })
         : customerApi.addBeneficiary({ customerId, beneficiaryRequest: { label, iban } }),
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["beneficiaries", customerId] });
+      qc.invalidateQueries({ queryKey: beneficiaryQueryKeys.beneficiaries(customerId) });
       onOpenChange(false);
     },
     onError: () => toast.error(t("errors.actionFailed")),

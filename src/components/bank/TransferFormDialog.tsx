@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { BeneficiarySelect } from "./BeneficiarySelect";
 import { CurrencySelect } from "./CurrencySelect";
 import { useCurrencies } from "@/lib/currencies";
+import { accountQueryKeys } from "@/lib/resourceEvents";
 
 interface Props {
   open: boolean;
@@ -56,9 +57,9 @@ export function TransferFormDialog({
         },
       }),
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["transfers", sourceIban] });
-      qc.invalidateQueries({ queryKey: ["transfers-in", sourceIban] });
-      qc.invalidateQueries({ queryKey: ["account", sourceIban] });
+      qc.invalidateQueries({ queryKey: accountQueryKeys.transfersOut(sourceIban) });
+      qc.invalidateQueries({ queryKey: accountQueryKeys.transfersIn(sourceIban) });
+      qc.invalidateQueries({ queryKey: accountQueryKeys.account(sourceIban) });
       onOpenChange(false);
       setBeneficiaryIban("");
       setLabel("");

@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { cardApi } from "../../apis";
+import { cardQueryKeys } from "@/lib/resourceEvents";
 import { toast } from "sonner";
 
 interface Props {
@@ -29,7 +30,7 @@ export function CardFormDialog({ open, onOpenChange, iban }: Props) {
     mutationFn: () =>
       cardApi.createCard({ cardRequest: { iban, transactionCeiling, rolling30Ceiling } }),
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["cards", iban] });
+      qc.invalidateQueries({ queryKey: cardQueryKeys.cards(iban) });
       onOpenChange(false);
     },
     onError: () => toast.error(t("errors.actionFailed")),

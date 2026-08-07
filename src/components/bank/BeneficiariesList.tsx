@@ -7,6 +7,7 @@ import { Pencil, Trash2, Plus } from "lucide-react";
 import { customerApi } from "../../apis";
 import type { BeneficiaryResponse, ListBeneficiariesRequest } from "@/rest/customer";
 import { BeneficiaryFormDialog } from "./BeneficiaryFormDialog";
+import { beneficiaryQueryKeys } from "@/lib/resourceEvents";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -40,7 +41,7 @@ export function BeneficiariesList({
   const [deleting, setDeleting] = useState<BeneficiaryResponse | null>(null);
 
   const { data } = useQuery({
-    queryKey: ["beneficiaries", customerId],
+    queryKey: beneficiaryQueryKeys.beneficiaries(customerId),
     queryFn: () => customerApi.listBeneficiaries({ customerId }),
   });
 
@@ -48,7 +49,7 @@ export function BeneficiariesList({
     mutationFn: (b: BeneficiaryResponse) =>
       customerApi.deleteBeneficiary({ customerId, beneficiaryId: b.id }),
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["beneficiaries", customerId] });
+      qc.invalidateQueries({ queryKey: beneficiaryQueryKeys.beneficiaries(customerId) });
       setDeleting(null);
     },
     onError: () => toast.error(t("errors.actionFailed")),

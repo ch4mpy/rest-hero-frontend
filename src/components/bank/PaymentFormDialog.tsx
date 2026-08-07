@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { cardApi } from "../../apis";
+import { cardQueryKeys } from "@/lib/resourceEvents";
 import { toast } from "sonner";
 import { BeneficiarySelect } from "./BeneficiarySelect";
 import { useCurrencies } from "@/lib/currencies";
@@ -42,7 +43,7 @@ export function PaymentFormDialog({ open, onOpenChange, cardNumber, customerId, 
         },
       }),
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["payments", cardNumber] });
+      qc.invalidateQueries({ queryKey: cardQueryKeys.payments(cardNumber) });
       onOpenChange(false);
       setDestinationIban("");
       setAmount(0);

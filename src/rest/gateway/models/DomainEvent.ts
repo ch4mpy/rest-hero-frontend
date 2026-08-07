@@ -19,23 +19,23 @@ import { mapValues } from '../runtime';
  *  frontend is expected to refetch the actual resource over REST once notified.
  * 
  *  <p>
- *  <code>resourceType</code> is a plain, free-form string rather than a shared enum: each publishing
- *  service owns its own resource type names, the starter module has no opinion on their values.
- *  <code>resourceOwner</code> and <code>audienceRoles</code> together describe who should receive the event:
- *  the subject that owns the resource, plus whichever authorities (mirroring the service's own
- *  <code>@PreAuthorize</code> expressions) are allowed to see it regardless of ownership. The gateway
- *  only needs to know, for each connected user, their subject and granted authorities to compute
- *  the audience, it has no notion of what an "account" or a "transfer" is.
+ *  <code>resourceType</code> comes from the shared {@link ResourceType ResourceType} taxonomy, so every publishing
+ *  service and the frontend agree on the same resource area names. <code>resourceOwner</code> and
+ *  <code>audienceRoles</code> together describe who should receive the event: the subject that owns the
+ *  resource, plus whichever authorities (mirroring the service's own <code>@PreAuthorize</code>
+ *  expressions) are allowed to see it regardless of ownership. The gateway only needs to know, for
+ *  each connected user, their subject and granted authorities to compute the audience, it has no
+ *  notion of what an "account" or a "transfer" is.
  * @export
  * @interface DomainEvent
  */
 export interface DomainEvent {
     /**
      * 
-     * @type {string}
+     * @type {DomainEventResourceTypeEnum}
      * @memberof DomainEvent
      */
-    resourceType?: string;
+    resourceType?: DomainEventResourceTypeEnum;
     /**
      * 
      * @type {string}
@@ -68,6 +68,18 @@ export interface DomainEvent {
     occurredAt?: Date;
 }
 
+/**
+* @export
+* @enum {string}
+*/
+export enum DomainEventResourceTypeEnum {
+    account = 'ACCOUNT',
+    accountTransfers = 'ACCOUNT_TRANSFERS',
+    accountCards = 'ACCOUNT_CARDS',
+    card = 'CARD',
+    cardPayments = 'CARD_PAYMENTS',
+    customerBeneficiaries = 'CUSTOMER_BENEFICIARIES'
+}
 /**
 * @export
 * @enum {string}
