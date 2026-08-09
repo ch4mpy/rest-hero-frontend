@@ -68,27 +68,29 @@ export interface DomainEvent {
     occurredAt?: Date;
 }
 
+
 /**
-* @export
-* @enum {string}
-*/
-export enum DomainEventResourceTypeEnum {
-    account = 'ACCOUNT',
-    accountTransfers = 'ACCOUNT_TRANSFERS',
-    accountCards = 'ACCOUNT_CARDS',
-    card = 'CARD',
-    cardPayments = 'CARD_PAYMENTS',
-    customerBeneficiaries = 'CUSTOMER_BENEFICIARIES'
-}
+ * @export
+ */
+export const DomainEventResourceTypeEnum = {
+    Account: 'ACCOUNT',
+    AccountTransfers: 'ACCOUNT_TRANSFERS',
+    AccountCards: 'ACCOUNT_CARDS',
+    Card: 'CARD',
+    CardPayments: 'CARD_PAYMENTS',
+    CustomerBeneficiaries: 'CUSTOMER_BENEFICIARIES'
+} as const;
+export type DomainEventResourceTypeEnum = typeof DomainEventResourceTypeEnum[keyof typeof DomainEventResourceTypeEnum];
+
 /**
-* @export
-* @enum {string}
-*/
-export enum DomainEventEventTypeEnum {
-    create = 'CREATE',
-    update = 'UPDATE',
-    delete = 'DELETE'
-}
+ * @export
+ */
+export const DomainEventEventTypeEnum = {
+    Create: 'CREATE',
+    Update: 'UPDATE',
+    Delete: 'DELETE'
+} as const;
+export type DomainEventEventTypeEnum = typeof DomainEventEventTypeEnum[keyof typeof DomainEventEventTypeEnum];
 
 
 /**

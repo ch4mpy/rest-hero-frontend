@@ -3,15 +3,12 @@ import { useQueryClient, type QueryClient } from "@tanstack/react-query";
 import { DomainEventFromJSON, type DomainEvent } from "@/rest/gateway";
 import { GATEWAY_BASE_URL, gatewayApi } from "../apis";
 import { isAuthenticated, useMe } from "./auth";
-import { resourceTypeInvalidations, type ResourceType } from "./resourceEvents";
+import { resourceTypeInvalidations } from "./resourceEvents";
 
 function invalidateForEvent(queryClient: QueryClient, event: DomainEvent): void {
   if (!event.resourceId || !event.resourceType) return;
   const affectedKeys =
-    resourceTypeInvalidations[event.resourceType as ResourceType]?.(
-      event.resourceId,
-      event.resourceOwner,
-    ) ?? [];
+    resourceTypeInvalidations[event.resourceType]?.(event.resourceId, event.resourceOwner) ?? [];
   affectedKeys.forEach((queryKey) => queryClient.invalidateQueries({ queryKey }));
 }
 

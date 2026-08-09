@@ -19,11 +19,6 @@ import {
     ProblemDetailToJSON,
 } from '../models/ProblemDetail';
 import {
-    type ResourceTypeResponse,
-    ResourceTypeResponseFromJSON,
-    ResourceTypeResponseToJSON,
-} from '../models/ResourceTypeResponse';
-import {
     type ValidationProblemDetail,
     ValidationProblemDetailFromJSON,
     ValidationProblemDetailToJSON,
@@ -55,16 +50,16 @@ export class AccountServiceEventsApi extends runtime.BaseAPI {
 
     /**
      */
-    async listResourceTypesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ResourceTypeResponse>>> {
+    async listResourceTypesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<string>>> {
         const requestOptions = await this.listResourceTypesRequestOpts();
         const response = await this.request(requestOptions, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ResourceTypeResponseFromJSON));
+        return new runtime.JSONApiResponse<any>(response);
     }
 
     /**
      */
-    async listResourceTypes(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ResourceTypeResponse>> {
+    async listResourceTypes(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<string>> {
         const response = await this.listResourceTypesRaw(initOverrides);
         return await response.value();
     }

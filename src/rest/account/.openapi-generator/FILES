@@ -12,7 +12,6 @@ docs/MoneyTransfersApi.md
 docs/PageMetadata.md
 docs/PagedModelMoneyTransferResponse.md
 docs/ProblemDetail.md
-docs/ResourceTypeResponse.md
 docs/ValidationProblemDetail.md
 index.ts
 models/AccountCreationRequest.ts
@@ -22,7 +21,6 @@ models/MoneyTransferResponse.ts
 models/PageMetadata.ts
 models/PagedModelMoneyTransferResponse.ts
 models/ProblemDetail.ts
-models/ResourceTypeResponse.ts
 models/ValidationProblemDetail.ts
 models/index.ts
 runtime.ts

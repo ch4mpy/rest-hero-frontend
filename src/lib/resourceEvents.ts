@@ -1,4 +1,4 @@
-import { ResourceTypeResponseResourceTypeEnum as ResourceType } from "@/rest/account";
+import { DomainEventResourceTypeEnum as ResourceType } from "@/rest/gateway";
 
 export type { ResourceType };
 
@@ -32,19 +32,19 @@ export const resourceTypeInvalidations: Partial<
     (resourceId: string, resourceOwner: string | undefined) => readonly (readonly unknown[])[]
   >
 > = {
-  [ResourceType.account]: (iban, customerId) => [
+  [ResourceType.Account]: (iban, customerId) => [
     accountQueryKeys.account(iban),
     accountQueryKeys.accounts(customerId),
   ],
-  [ResourceType.accountTransfers]: (iban) => [
+  [ResourceType.AccountTransfers]: (iban) => [
     accountQueryKeys.account(iban),
     accountQueryKeys.transfersOut(iban),
     accountQueryKeys.transfersIn(iban),
   ],
-  [ResourceType.accountCards]: (iban) => [cardQueryKeys.cards(iban)],
-  [ResourceType.card]: (cardNumber) => [cardQueryKeys.card(cardNumber)],
-  [ResourceType.cardPayments]: (cardNumber) => [cardQueryKeys.payments(cardNumber)],
-  [ResourceType.customerBeneficiaries]: (_beneficiaryId, customerId) => [
+  [ResourceType.AccountCards]: (iban) => [cardQueryKeys.cards(iban)],
+  [ResourceType.Card]: (cardNumber) => [cardQueryKeys.card(cardNumber)],
+  [ResourceType.CardPayments]: (cardNumber) => [cardQueryKeys.payments(cardNumber)],
+  [ResourceType.CustomerBeneficiaries]: (_beneficiaryId, customerId) => [
     beneficiaryQueryKeys.beneficiaries(customerId),
   ],
 };

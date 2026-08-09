@@ -10,11 +10,11 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "gateway-api:generate": "npx openapi-generator-cli generate -i ./openapi/gateway.openapi.json -g typescript-fetch --type-mappings AnyType=any --additional-properties=stringEnums=true,enumPropertyNaming=camelCase,supportsES6=true -o src/rest/gateway",
-    "customer-api:generate": "npx openapi-generator-cli generate -i ./openapi/customer-service.openapi.json -g typescript-fetch --type-mappings AnyType=any --additional-properties=stringEnums=true,enumPropertyNaming=camelCase,supportsES6=true -o src/rest/customer",
-    "account-api:generate": "npx openapi-generator-cli generate -i ./openapi/account-service.openapi.json -g typescript-fetch --type-mappings AnyType=any --additional-properties=stringEnums=true,enumPropertyNaming=camelCase,supportsES6=true -o src/rest/account",
-    "card-api:generate": "npx openapi-generator-cli generate -i ./openapi/card-service.openapi.json -g typescript-fetch --type-mappings AnyType=any --additional-properties=stringEnums=true,enumPropertyNaming=camelCase,supportsES6=true -o src/rest/card",
-    "currency-api:generate": "npx openapi-generator-cli generate -i ./openapi/currency-service.openapi.json -g typescript-fetch --type-mappings AnyType=any --additional-properties=stringEnums=true,enumPropertyNaming=camelCase,supportsES6=true -o src/rest/currency",
+    "gateway-api:generate": "npx openapi-generator-cli generate -i ./openapi/gateway.openapi.json -g typescript-fetch --type-mappings AnyType=any --additional-properties=supportsES6=true -o src/rest/gateway",
+    "customer-api:generate": "npx openapi-generator-cli generate -i ./openapi/customer-service.openapi.json -g typescript-fetch --type-mappings AnyType=any --additional-properties=supportsES6=true -o src/rest/customer",
+    "account-api:generate": "npx openapi-generator-cli generate -i ./openapi/account-service.openapi.json -g typescript-fetch --type-mappings AnyType=any --additional-properties=supportsES6=true -o src/rest/account",
+    "card-api:generate": "npx openapi-generator-cli generate -i ./openapi/card-service.openapi.json -g typescript-fetch --type-mappings AnyType=any --additional-properties=supportsES6=true -o src/rest/card",
+    "currency-api:generate": "npx openapi-generator-cli generate -i ./openapi/currency-service.openapi.json -g typescript-fetch --type-mappings AnyType=any --additional-properties=supportsES6=true -o src/rest/currency",
     "api": "npm run gateway-api:generate && npm run currency-api:generate && npm run customer-api:generate && npm run account-api:generate && npm run card-api:generate"
   },
   "dependencies": {
